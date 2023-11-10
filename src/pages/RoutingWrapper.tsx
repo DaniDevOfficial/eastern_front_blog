@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HomePage } from "./HomePage";
 
 export function RouterWrapper() {
 
@@ -6,7 +7,7 @@ export function RouterWrapper() {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<input placeholder='Homepage'/>} />
+                    <Route path="/" element={<HomePage/>} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes >
             </BrowserRouter >
