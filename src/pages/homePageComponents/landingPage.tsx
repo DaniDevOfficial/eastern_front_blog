@@ -37,9 +37,33 @@ export function LandingPage() {
                 textAlign="center"
                 color="white"
             >
-                <Heading>{latestPost ? latestPost.title : 'Loading...'}</Heading>
-                <Text>{latestPost ? latestPost.subtitle : 'Fetching latest post...'}</Text>
+                <Heading>Ukrain Russia War</Heading>
+
             </Box>
+
+            <Box
+                position="absolute"
+                bottom="0"
+                right="0"
+                textAlign={{ base: 'center', md: 'left' }} 
+                paddingRight={{ base: '10vw', md: '70%' }}  
+                paddingLeft={{ base: '10vw', md: '3vw' }}   
+                color="white"
+                paddingBottom={{ base: '2vh', md: '2vh' }}  
+            >
+                <Heading
+                    fontSize={{ base: '1.3rem', md: '1.5rem' }} 
+                    paddingBottom={{ base: '1vh', md: '1vh' }}
+                >
+                    {latestPost ? latestPost.title : 'Loading...'}
+                </Heading>
+                <Text
+                    fontSize={{ base: '0.9rem', md: '1rem' }} 
+                >
+                    {latestPost ? latestPost.subtitle : 'Fetching latest post...'}
+                </Text>
+            </Box>
+
         </Box>
     );
 }
