@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPosts } from '../../repo/repo';
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Box, Heading, Text, Link as ChakraLink, Icon } from '@chakra-ui/react';
 import { Post } from '../../types/Post';
+import { AiOutlineArrowRight } from 'react-icons/ai';
+import { Link as ReactRouterLink } from 'react-router-dom';
+
 export function LandingPage() {
     const [latestPost, setLatestPost] = useState<Post>();
 
@@ -45,23 +48,36 @@ export function LandingPage() {
                 position="absolute"
                 bottom="0"
                 right="0"
-                textAlign={{ base: 'center', md: 'left' }} 
-                paddingRight={{ base: '10vw', md: '70%' }}  
-                paddingLeft={{ base: '10vw', md: '3vw' }}   
+                textAlign={{ base: 'center', md: 'left' }}
+                paddingRight={{ base: '10vw', md: '70%' }}
+                paddingLeft={{ base: '10vw', md: '3vw' }}
                 color="white"
-                paddingBottom={{ base: '2vh', md: '2vh' }}  
+                paddingBottom={{ base: '2vh', md: '2vh' }}
             >
                 <Heading
-                    fontSize={{ base: '1.3rem', md: '1.5rem' }} 
+                    fontSize={{ base: '1.3rem', md: '1.5rem' }}
                     paddingBottom={{ base: '1vh', md: '1vh' }}
                 >
                     {latestPost ? latestPost.title : 'Loading...'}
                 </Heading>
                 <Text
-                    fontSize={{ base: '0.9rem', md: '1rem' }} 
+                    fontSize={{ base: '0.9rem', md: '1rem' }}
                 >
                     {latestPost ? latestPost.subtitle : 'Fetching latest post...'}
                 </Text>
+                {latestPost && (
+                    <ChakraLink
+                        as={ReactRouterLink}
+                        to={`/posts/${latestPost.id}`}
+                        display="flex"
+                        alignItems="center"
+                        color="teal.500"
+                        _hover={{ color: 'teal.700' }}
+                    >
+                        Mehr lesen
+                        <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
+                    </ChakraLink>
+                )}
             </Box>
 
         </Box>
