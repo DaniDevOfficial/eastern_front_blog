@@ -58,12 +58,13 @@ export function LandingPage() {
                     fontSize={{ base: '1.3rem', md: '1.5rem' }}
                     paddingBottom={{ base: '1vh', md: '1vh' }}
                 >
-                    {latestPost ? latestPost.title : 'Loading...'}
+                    {latestPost ? latestPost.title : 'Lorem ipsum dolor sit amet'}
                 </Heading>
                 <Text
                     fontSize={{ base: '0.9rem', md: '1rem' }}
                 >
-                    {latestPost ? latestPost.subtitle : 'Fetching latest post...'}
+
+                    {latestPost ? latestPost.subtitle : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima tempore ratione quas pariatur modi magnam voluptate dolorem, quo facere repudiandae incidunt earum autem dolore iste cum nam aliquid beatae. Velit.'}
                 </Text>
                 {latestPost && (
                     <ChakraLink
