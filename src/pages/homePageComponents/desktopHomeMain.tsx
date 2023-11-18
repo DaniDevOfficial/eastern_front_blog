@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { getAllPosts } from '../../repo/repo';
 import { Box, Heading, Text, Image, Link as ChakraLink, Icon } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { CiShare2 } from 'react-icons/ci';
 
 export function DesktopHomeMain({ posts }) {
+    const location = useLocation();
+    const currentUrl = window.location.origin + location.pathname;
 
+    const handleCopyLink = (postId) => {
+        const linkToCopy = `${currentUrl}posts/${postId}`;
+        navigator.clipboard.writeText(linkToCopy);
+    };
     return (
         <Box position="relative" background="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" >
 
@@ -17,7 +24,7 @@ export function DesktopHomeMain({ posts }) {
                             {post.image && <Image src={post.image?.src} alt={post.image.alt} maxW="100%" maxH="100%" />}
                         </Box>
                         <Box mt="4" bg="gray.700" p="2" borderRadius="md">
-                            Likes: (für später)
+                        <Icon as={CiShare2} onClick={() => handleCopyLink(post.id)}   cursor="pointer" marginLeft="10px"/>
                         </Box>
                     </Box>
 

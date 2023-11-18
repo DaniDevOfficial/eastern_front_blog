@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { getAllPosts } from '../../repo/repo';
-import { Box, Heading, Text, Image, Link as ChakraLink, Icon } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Box, Heading, Text, Image, Link as ChakraLink, Icon, Button } from '@chakra-ui/react';
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { CiShare2 } from "react-icons/ci";
 
 export function MobileHomeMain({ posts }) {
+    const location = useLocation();
+    const currentUrl = window.location.origin + location.pathname;
+
+    const handleCopyLink = (postId) => {
+        const linkToCopy = `${currentUrl}posts/${postId}`;
+        navigator.clipboard.writeText(linkToCopy);
+    };
+
     return (
         <Box position="relative" background="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))">
             {posts.map((post) => (
@@ -20,7 +29,8 @@ export function MobileHomeMain({ posts }) {
                     </Box>
 
                     <Box mt="4" bg="gray.700" p="2" borderRadius="md" textAlign="center" margin="1vw ">
-                        Likes: (für später)
+                        Likes: (für später) 
+                        <Icon as={CiShare2} onClick={() => handleCopyLink(post.id)}   cursor="pointer" marginLeft="10px"/>
                     </Box>
 
                     <Text textAlign="center" mt="4">

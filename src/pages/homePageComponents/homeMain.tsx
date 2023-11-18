@@ -14,7 +14,7 @@ export function HomeMain() {
                 { length: 5 },
                 (_, index) => ({ ...fetchedPosts[0], id: `${fetchedPosts[0].id}_${index}` })
             );
-            setPosts(duplicatedPosts);
+            setPosts(duplicatedPosts); 
         });
     }, []);
 
