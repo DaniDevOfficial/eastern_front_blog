@@ -61,7 +61,7 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
         {latestPost && (
           <ChakraLink
             as={ReactRouterLink}
-            to={`/posts/${latestPost.id}`}
+            to={`/post/${latestPost.id}`}
             display="flex"
             alignItems="center"
             color="teal.500"
