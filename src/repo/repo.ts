@@ -97,3 +97,37 @@ export async function getArticleById(id: string): Promise<Article> {
     throw new Error("Could not get article:\n" + e);
   }
 }
+
+export async function getPostById(id: string): Promise<Post> {
+  try {
+    const snapshot = await getDoc(doc(postCollection, id));
+
+    if (!snapshot.exists()) {
+      throw new Error("No such document!");
+    }
+
+    const data = snapshot.data() as FirestorePost;
+
+    const published_at = data.published_at
+      ? new Date(data.published_at)
+      : undefined;
+
+    let image: Image | undefined;
+    try {
+      image = data.image_id ? await getImageById(data.image_id) : undefined;
+    } catch {
+      image = undefined;
+    }
+
+    return {
+      id: snapshot.id,
+      article_id: data.article_id,
+      image: image,
+      title: data.title,
+      subtitle: data.subtitle,
+      published_at: published_at,
+    } as Post;
+  } catch (e) {
+    throw new Error("Could not get post:\n" + e);
+  }
+}
