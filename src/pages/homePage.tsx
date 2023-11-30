@@ -1,12 +1,13 @@
 import React from 'react'
+import { LandingPage } from './homePageComponents/landingPage';
+import { HomeMain } from './homePageComponents/homeMain';
 
 export function HomePage() {
 
     return (
         <>
-            <h1>Home Page</h1>
-            <div className="qw"> Image</div>
-            
+            <LandingPage />    
+            <HomeMain />  
         </>
     )
 }
