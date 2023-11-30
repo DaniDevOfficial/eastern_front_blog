@@ -2,7 +2,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDoc, getDocs } from "firebase/firestore";
 import { getStorage, getDownloadURL, ref } from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -19,8 +18,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
+export const postCollection = collection(db, "posts");
 export const articleCollection = collection(db, "articles");
 export const imagesCollection = collection(db, "images");
 // Initialize Storage
 const storage = getStorage(app);
 export const imageStorage = ref(storage, "articles/images");
+
+// TODO: Add Auth service
