@@ -9,13 +9,17 @@ export function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    getAllPosts().then((posts) => {
-      const sortedPosts = posts.sort(sortByDateDesc);
+    getAllPosts()
+      .then((posts) => {
+        const sortedPosts = posts.sort(sortByDateDesc);
         if (sortedPosts.length === 0) throw new Error("No posts found");
-      setLatestPost(sortedPosts[0]);
-      setPosts(sortedPosts.slice(1));
-    });
-  });
+        setLatestPost(sortedPosts[0]);
+        setPosts(sortedPosts.slice(1));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
