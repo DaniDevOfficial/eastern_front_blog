@@ -12,7 +12,7 @@ interface LandingPageProps {
 export function LandingPage({ post: latestPost }: LandingPageProps) {
   return (
     <Box
-    overflowX={{ base: "hidden", md: "hidden" }}
+    overflowX="hidden"
     >
       <Center>
 
