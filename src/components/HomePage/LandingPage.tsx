@@ -3,6 +3,7 @@ import { Box, Heading, Text, Link as ChakraLink, Icon, Center } from "@chakra-ui
 import { Post } from "../../types/Post";
 import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { CiBookmark } from "react-icons/ci";
 
 interface LandingPageProps {
   post: Post;
@@ -38,6 +39,28 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
           />
           <Box
             position="absolute"
+            top="0"
+            left="0"
+            textAlign="left"
+            paddingTop="5%"
+            paddingLeft="5%"
+            color="white"
+            display="flex"
+            alignItems="center"
+          >
+            <Text fontSize="1rem" padding="0 10px">
+              Author
+            </Text>
+            <Text fontSize="1rem" padding="0 10px">
+              Date
+            </Text>
+            <Text fontSize="1rem" padding="0 10px">
+              Reading Time
+            </Text>
+            <Icon as={CiBookmark} boxSize={6} />
+          </Box>
+          <Box
+            position="absolute"
             bottom="0"
             right="0"
             textAlign={{ base: "center", md: "left" }}
@@ -58,8 +81,7 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
               <Box
                 _hover={{ cursor: "pointer" }}
                 p={2}
-                position="absolute"
-                alignItems="center"
+                display="inline-flex"
                 color="#FEC709"
                 border={{ base: "1px solid #FEC709" }}
                 borderRadius="10px"
@@ -68,8 +90,6 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
                 <ChakraLink
                   as={ReactRouterLink}
                   to={`/post/${latestPost.id}`}
-                  display="flex"
-                  alignItems="center"
                   color="#FEC709"
                 >
                   Mehr lesen
@@ -81,24 +101,27 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
         </Box>
 
       </Center>
-  
+
       <Box
         position="relative"
         left="50%"
         marginTop="5vh"
-        color="#FEC709"
-
+        _hover={{ cursor: "pointer", color: "#" }}
 
       >
-
-
-
         <Icon
+          color="#FEC709"
+          _hover={{
+            cursor: "pointer",
+            color: "#FEC709",
+            transform: "scale(1.2)",
+            transition: "transform 0.3s ease-in-out, color 0.3s ease-in-out",
+          }}
           onClick={() => {
             window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
           }}
 
-        as={AiOutlineArrowDown} boxSize={6} />
+          as={AiOutlineArrowDown} boxSize={6} />
       </Box>
     </Box>
   );
