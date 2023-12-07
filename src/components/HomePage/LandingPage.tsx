@@ -3,7 +3,7 @@ import { Box, Heading, Text, Link as ChakraLink, Icon, Center } from "@chakra-ui
 import { Post } from "../../types/Post";
 import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { CiBookmark } from "react-icons/ci";
+import { CiBookmark, CiClock1 } from "react-icons/ci";
 
 interface LandingPageProps {
   post: Post;
@@ -11,7 +11,9 @@ interface LandingPageProps {
 
 export function LandingPage({ post: latestPost }: LandingPageProps) {
   return (
-    <Box>
+    <Box
+    overflowX={{ base: "hidden", md: "hidden" }}
+    >
       <Center>
 
         <Box
@@ -42,7 +44,7 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             top="0"
             left="0"
             textAlign="left"
-            paddingTop="5%"
+            paddingTop="2%"
             paddingLeft="5%"
             color="white"
             display="flex"
@@ -54,9 +56,12 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             <Text fontSize="1rem" padding="0 10px">
               Date
             </Text>
-            <Text fontSize="1rem" padding="0 10px">
-              Reading Time
-            </Text>
+            <Box display="flex" alignItems="center" padding="0 10px">
+              <Icon as={CiClock1} boxSize={5} />
+              <Text fontSize="1rem" padding="0 5px">
+                5 min
+              </Text>
+            </Box>
             <Icon as={CiBookmark} boxSize={6} />
           </Box>
           <Box
@@ -68,7 +73,7 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             paddingLeft={{ base: "10vw", md: "3vw" }}
 
             color="white"
-            paddingBottom={{ base: "5%", md: "10%" }}
+            paddingBottom={{ base: "5%", md: "5%" }}
           >
             <Heading
               fontSize={{ base: "1.3rem", md: "1.5rem" }}
