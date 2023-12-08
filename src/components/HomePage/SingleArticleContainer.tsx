@@ -6,7 +6,6 @@ import {
     Link as ChakraLink,
     Icon,
     Flex,
-    Toast,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -224,7 +223,7 @@ export function SingleArticleContainer({ post, type } : SingleArticleContainerPr
 
     return (
         <>
-            Goofy ahh comp: SingleArticleContainer
+            Opsie
         </>
     )
 }

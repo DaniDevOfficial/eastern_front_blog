@@ -30,21 +30,37 @@ export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
 
   };
 
-  const Article = ({ post, index }: { post: Post; index: number }) => {
-    let articleStyleClass = '';
+  enum ArticleStyle {
+    Double = 'double',
+    Single = 'single',
+    SmallImageLeft = 'smallImageLeft',
+    SmallImageRight = 'smallImageRight',
+  }
 
-    const pattern = ['double', 'double', 'single', 'smallImageLeft', 'smallImageRight', 'double', 'double', 'single', 'smallImageLeft', 'smallImageRight'];
+  const Article = ({ post, index }: { post: Post; index: number }) => {
+    let articleStyleClass: ArticleStyle = ArticleStyle.Double;
+
+    const pattern = [
+      ArticleStyle.Double,
+      ArticleStyle.Double,
+      ArticleStyle.Single,
+      ArticleStyle.SmallImageLeft,
+      ArticleStyle.SmallImageRight,
+      ArticleStyle.Double,
+      ArticleStyle.Double,
+      ArticleStyle.Single,
+      ArticleStyle.SmallImageLeft,
+      ArticleStyle.SmallImageRight,
+    ];
 
     articleStyleClass = pattern[index % pattern.length];
 
-
-      return (
-        <SingleArticleContainer post={post} type={articleStyleClass as "double" | "single" | "smallImageLeft" | "smallImageRight"} />
-      )
-
-
-
-
+    return (
+      <SingleArticleContainer
+        post={post}
+        type={articleStyleClass as "double" | "single" | "smallImageLeft" | "smallImageRight"}
+      />
+    );
   };
 
   return (
