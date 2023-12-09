@@ -1,0 +1,192 @@
+{
+	"primitives": {
+		"colors": {
+			"accent": {
+				"50": {
+					"id": "a6c54c96-3749-485b-a69c-51569e28df51",
+					"value": "#ffeeb4",
+					"type": "color"
+				},
+				"100": {
+					"id": "ab24c0e6-54af-4605-9201-cb21f22ec899",
+					"value": "#ffe690",
+					"type": "color"
+				},
+				"200": {
+					"id": "33a74a7c-f5af-4dcd-ac6a-02df7992bf3d",
+					"value": "#fede6d",
+					"type": "color"
+				},
+				"300": {
+					"id": "bf8fa74a-0bd6-495f-b9db-2e2d06368f01",
+					"value": "#fed649",
+					"type": "color"
+				},
+				"400": {
+					"id": "440a03f7-20db-4af0-91a2-95a6066da215",
+					"value": "#fecf2d",
+					"type": "color"
+				},
+				"500": {
+					"id": "72b5009b-8e09-46a1-991e-227a25bc7a19",
+					"value": "#fec709",
+					"type": "color"
+				},
+				"600": {
+					"id": "13f2a449-8060-45cf-afe7-7a8647ac1d2f",
+					"value": "#e2b001",
+					"type": "color"
+				},
+				"700": {
+					"id": "b8aefcc9-da3f-4f5b-89f6-416f6520c669",
+					"value": "#a27e01",
+					"type": "color"
+				},
+				"800": {
+					"id": "9736ab6b-1b57-4b9a-a0fe-6f66a07c96d5",
+					"value": "#7f6201",
+					"type": "color"
+				},
+				"900": {
+					"id": "55ec8a43-2949-46ea-a171-b936db645d42",
+					"value": "#5b4700",
+					"type": "color"
+				},
+				"base": {
+					"id": "c7dc3b5f-70b8-4378-b20b-ad39346bb018",
+					"value": "#FEC709",
+					"type": "color"
+				}
+			},
+			"bg": {
+				"50": {
+					"id": "786d55be-7f80-41f0-956b-9856c40f8ff0",
+					"value": "#646473",
+					"type": "color"
+				},
+				"100": {
+					"id": "5af87568-aa13-4f25-8637-4f8cfb5f44ca",
+					"value": "#535360",
+					"type": "color"
+				},
+				"200": {
+					"id": "eedefa05-6b49-4cd7-a7d7-9c093289061f",
+					"value": "#42424c",
+					"type": "color"
+				},
+				"300": {
+					"id": "7f88d366-4b85-473d-85ab-b9d138f070d5",
+					"value": "#323239",
+					"type": "color"
+				},
+				"400": {
+					"id": "7aff1169-ddf3-4019-ae72-ee644f5eb3ba",
+					"value": "#25252a",
+					"type": "color"
+				},
+				"500": {
+					"id": "10f373f0-423a-4907-a9a1-201b24fd5312",
+					"value": "#141417",
+					"type": "color"
+				},
+				"600": {
+					"id": "480dde09-0f43-4bc5-b804-cb6831330f51",
+					"value": "#030304",
+					"type": "color"
+				},
+				"700": {
+					"id": "a8d211c1-5148-4852-bec5-3d95875dc6e9",
+					"value": "#000000",
+					"type": "color"
+				},
+				"800": {
+					"id": "64ae2837-92f1-449c-b187-d403dfe73e13",
+					"value": "#000000",
+					"type": "color"
+				},
+				"900": {
+					"id": "a41eae27-f703-4b14-9b0f-3f62edc2b90f",
+					"value": "#000000",
+					"type": "color"
+				},
+				"base": {
+					"id": "bdd5bbc3-e437-4c20-990a-32beaa55fd9a",
+					"value": "#141417",
+					"type": "color"
+				}
+			},
+			"bg-highlight": {
+				"50": {
+					"id": "940f4331-1521-4b41-965a-0080fcb25590",
+					"value": "#6c6c7b",
+					"type": "color"
+				},
+				"100": {
+					"id": "2c29508d-988c-4aa0-855b-9e1749bd8d52",
+					"value": "#5b5b68",
+					"type": "color"
+				},
+				"200": {
+					"id": "0a43a5a2-bcdd-4dab-abe1-eaa6793dcfd0",
+					"value": "#4b4b55",
+					"type": "color"
+				},
+				"300": {
+					"id": "be616b06-cb81-4ddc-a0ea-71c682724108",
+					"value": "#3a3a42",
+					"type": "color"
+				},
+				"400": {
+					"id": "4f7fee74-a105-433f-ad55-8d7ad8fb4a31",
+					"value": "#2d2d33",
+					"type": "color"
+				},
+				"500": {
+					"id": "efd2682c-2804-42cf-8771-2b6dba8e05e4",
+					"value": "#1c1c20",
+					"type": "color"
+				},
+				"600": {
+					"id": "9dda2bd5-ce73-4dd4-ae7f-160c31c693c9",
+					"value": "#0b0b0d",
+					"type": "color"
+				},
+				"700": {
+					"id": "e2430fd4-e424-40a9-8fd5-38fb2d246f96",
+					"value": "#000000",
+					"type": "color"
+				},
+				"800": {
+					"id": "505712b1-394c-4e32-9a39-b65d16ce6de2",
+					"value": "#000000",
+					"type": "color"
+				},
+				"900": {
+					"id": "773467d6-3982-4b2c-8c03-f937fe6af71a",
+					"value": "#000000",
+					"type": "color"
+				},
+				"base": {
+					"id": "b0ed0be8-cfa3-449e-9822-2e5b3f0a8ab5",
+					"value": "#1C1C20",
+					"type": "color"
+				}
+			}
+		},
+		"typography": {
+			"fontSizes": {},
+			"fontWeights": {},
+			"lineHeights": {}
+		},
+		"shadows": {}
+	},
+	"themes": [],
+	"files": [
+		"ts"
+	],
+	"__internal__": {
+		"migrations": {
+			"version": "0.0.6"
+		}
+	}
+}
