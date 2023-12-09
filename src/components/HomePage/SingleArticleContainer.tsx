@@ -15,7 +15,7 @@ interface SingleArticleContainerProps {
     post: Post;
     type: 'double' | 'single' | 'smallImageLeft' | 'smallImageRight';
 }
-export function SingleArticleContainer({ post, type } : SingleArticleContainerProps) {
+export function SingleArticleContainer({ post, type }: SingleArticleContainerProps) {
 
     const location = useLocation();
     const currentUrl = window.location.origin + location.pathname;
@@ -172,13 +172,19 @@ export function SingleArticleContainer({ post, type } : SingleArticleContainerPr
                 <Flex alignItems="center">
                     <Box
                         ml={4}
+                        minWidth={"400px"}
+                        minHeight={"40vh"}
                         width="37vw"
+                        display={"flex"}
+                        flexDirection="column"
+                        justifyContent={"center"}
                     >
                         <Image
                             borderRadius="20px"
                             src={post.image?.src}
                             alt={post.image.source}
                             height="100%"
+
                             width="100%"
                             objectFit="cover"
                             p={2}
@@ -194,30 +200,35 @@ export function SingleArticleContainer({ post, type } : SingleArticleContainerPr
     } else if (type === 'smallImageRight') {
         return (
             <Box
-              width="80vw"
-              backgroundColor="#1C1C20"
-              borderRadius="20px"
+                width="80vw"
+                backgroundColor="#1C1C20"
+                borderRadius="20px"
             >
-              <Flex alignItems="center">
-    
-                <TextPart />
-                <Box
-                  ml={4}
-                  width="37vw"
-                >
-                  <Image
-                    borderRadius="20px"
-                    src={post.image?.src}
-                    alt={post.image.source}
-                    height="100%"
-                    width="100%"
-                    objectFit="cover"
-                    p={2}
-                  />
-                </Box>
-              </Flex>
+                <Flex alignItems="center">
+
+                    <TextPart />
+                    <Box
+                        ml={4}
+                        width="37vw"
+                        minWidth={"400px"}
+                        minHeight={"40vh"}
+                        display={"flex"}
+                        flexDirection="column"
+                        justifyContent={"center"}
+                    >
+                        <Image
+                            borderRadius="20px"
+                            src={post.image?.src}
+                            alt={post.image.source}
+                            height="100%"
+                            width="100%"
+                            objectFit="cover"
+                            p={2}
+                        />
+                    </Box>
+                </Flex>
             </Box>
-          )
+        )
     }
 
 

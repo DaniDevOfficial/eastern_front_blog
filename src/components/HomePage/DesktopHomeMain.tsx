@@ -57,6 +57,7 @@ export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
 
     return (
       <SingleArticleContainer
+      
         post={post}
         type={articleStyleClass as "double" | "single" | "smallImageLeft" | "smallImageRight"}
       />
@@ -71,7 +72,8 @@ export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
       gap="5vw"
     >
       {multipliedPosts.map((post, index) => (
-        <Article key={index} post={post} index={index} />
+        <Article 
+        key={index} post={post} index={index} />
       ))}
     </Flex>
   );
