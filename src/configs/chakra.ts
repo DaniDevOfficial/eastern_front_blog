@@ -28,6 +28,12 @@ const components: { [key: string]: ComponentStyleConfig } = {
       // TOOD: add font family
     },
   },
+  Divider: {
+    baseStyle: {
+      rounded: "full",
+      opacity: 1,
+    },
+  },
 };
 
 export const theme = extendTheme({
