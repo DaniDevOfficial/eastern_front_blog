@@ -1,14 +1,10 @@
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
 import { ArticlePage, loadPost } from "./ArticlePage";
 import { HomePage } from "./HomePage";
 import { PageLayout } from "./PageLayout";
 
 export function RouterWrapper() {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: <PageLayout />,
