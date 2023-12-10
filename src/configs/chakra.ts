@@ -16,21 +16,21 @@ const components: { [key: string]: ComponentStyleConfig } = {
       },
     },
   },
-};
-
-/*
-const styles = {
-  global: {
-    body: {
-      background: "bg.base",
+  Text: {
+    baseStyle: {
       color: "white",
+      // TOOD: add font family
+    },
+  },
+  Heading: {
+    baseStyle: {
+      color: "white",
+      // TOOD: add font family
     },
   },
 };
-*/
 
 export const theme = extendTheme({
   colors,
   components,
-  /*styles,*/
 });

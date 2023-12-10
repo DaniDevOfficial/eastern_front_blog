@@ -1,5 +1,6 @@
 import { Flex, chakra } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
+import { NavBar } from "../components/NavBar";
 
 export function PageLayout() {
   return (
@@ -9,7 +10,7 @@ export function PageLayout() {
         height={"100%"}
         bg="bg.base"
       >
-        {/*TODO: Add Navbar*/}
+        <NavBar />
         <Outlet />
         {/*TODO: Add Footer*/}
       </chakra.div>
