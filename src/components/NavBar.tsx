@@ -10,6 +10,7 @@ import {
   chakra,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const pages = [
@@ -17,8 +18,22 @@ const pages = [
   { name: "About", path: "/about" },
 ];
 
+const song = new Audio(
+  atob(
+    "aHR0cHM6Ly93d3cucnVzc2lhbi10cmFuc2xhdGlvbi1wcm9zLmNvbS9hdWRpby9ydXNzaWFuLWZlZGVyYXRpb24tbmF0aW9uYWwtYW50aGVtLm1wMw"
+  )
+);
+
 export function NavBar() {
+  const [clicked, setClicked] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+
+  useEffect(() => {
+    if (clicked >= 20) {
+      song.play();
+      setClicked(0);
+    }
+  }, [clicked]);
 
   return (
     <chakra.div marginBottom={{ base: 2, md: 5 }}>
@@ -47,6 +62,7 @@ export function NavBar() {
             fontSize={{ base: "xs", md: "lg", lg: "2xl" }}
             fontWeight={"bold"}
             _hover={{ transform: "scale(1.05)" }}
+            onClick={() => setClicked((c) => c + 1)}
           >
             Western Front Blog
           </Heading>
