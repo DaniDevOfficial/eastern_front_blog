@@ -134,9 +134,9 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 backgroundColor="#1C1C20"
                 borderRadius="20px"
                 display="flex"
-                flexDirection="column" // Set flexDirection to column
-                justifyContent="space-between" // Align items with space between them
-                minHeight="40vh" // Set a minimum height for the outer Box
+                flexDirection="column" 
+                justifyContent="space-between" 
+                minHeight="40vh"
             >
                 <Box>
                     <Box height="40vh" width="100%" justifyContent="center" alignItems="center">
@@ -144,7 +144,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                             padding={2}
                             borderRadius="20px"
                             src={post.image?.src}
-                            alt={post.image.source}
+                            alt={post.image?.source ?? ''}
                             height="100%"
                             width="100%"
                             objectFit="cover"
