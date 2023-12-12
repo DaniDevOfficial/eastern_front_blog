@@ -27,7 +27,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
 
     };
     function handleBookmark(postId: string) {
-        alert("Bookmark clicked: " +  postId); // change to toast
+        alert("Bookmark clicked: " + postId); // change to real handler
     }
     const TextPart = () => {
         return (
@@ -43,8 +43,8 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                         {post.title}
                     </Heading>
                     <Icon
-                    _hover={{ cursor: "pointer" }}
-                    onClick={() => handleBookmark(post.id)} 
+                        _hover={{ cursor: "pointer" }}
+                        onClick={() => handleBookmark(post.id)}
                         as={CiBookmark}
                         ml={2}
                         boxSize={5}
@@ -57,68 +57,75 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 >
                     {post.subtitle}
                 </Text>
-                <Box
-                    alignItems="center"
-                    justifyContent="space-between"
 
-                >
-                    <Box
-                        _hover={{ cursor: "pointer" }}
-                        p={2}
-                        display="inline-flex"
-                        color="#FEC709"
-                        border={{ base: "1px solid #FEC709" }}
-                        borderRadius="10px"
-                        mb={2}
-                    >
-                        <ChakraLink
-                            as={ReactRouterLink}
-                            to={`/post/${post.id}`}
-                            color="#FEC709"
-                        >
-                            Mehr lesen
-                            <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
-                        </ChakraLink>
-                    </Box>
-                    <Flex
-                        alignItems="center"
-                        gap={2}
-                    >
-                        <Text
-                            fontSize="sm"
-                            color="gray.400"
-                        >
-                            Author
-                        </Text>
-                        <Text
-                            fontSize="sm"
-                            color="gray.400"
-                        >
-                            Date
-                        </Text>
-                        <Text
-                            fontSize="sm"
-                            color="gray.400"
-                        >
-                            Time To read
-                        </Text>
-                        <Box
-                            display="flex"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Icon
-                                as={CiShare2}
-                                onClick={() => handleCopyLink(post.id)}
-                                cursor="pointer"
-                            />
-                        </Box>
-
-                    </Flex>
-                </Box>
             </Box>
         )
     }
+    const BottomPart = () => {
+        return (
+            <Box
+                alignItems="center"
+                justifyContent="space-between"
+                p={4}
+
+            >
+                <Box
+                    _hover={{ cursor: "pointer" }}
+                    p={2}
+                    display="inline-flex"
+                    color="#FEC709"
+                    border={{ base: "1px solid #FEC709" }}
+                    borderRadius="10px"
+                    mb={2}
+                >
+                    <ChakraLink
+                        as={ReactRouterLink}
+                        to={`/post/${post.id}`}
+                        color="#FEC709"
+                    >
+                        Mehr lesen
+                        <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
+                    </ChakraLink>
+                </Box>
+                <Flex
+                    alignItems="center"
+                    gap={2}
+                >
+                    <Text
+                        fontSize="sm"
+                        color="gray.400"
+                    >
+                        Author
+                    </Text>
+                    <Text
+                        fontSize="sm"
+                        color="gray.400"
+                    >
+                        Date
+                    </Text>
+                    <Text
+                        fontSize="sm"
+                        color="gray.400"
+                    >
+                        Time To read
+                    </Text>
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        gap={2}
+                    >
+                        <Icon
+                            as={CiShare2}
+                            onClick={() => handleCopyLink(post.id)}
+                            cursor="pointer"
+                        />
+                    </Box>
+
+                </Flex>
+            </Box>
+        )
+    }
+
 
     if (type === 'double') {
         return (
@@ -126,26 +133,30 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 width="37.5vw"
                 backgroundColor="#1C1C20"
                 borderRadius="20px"
-
+                display="flex"
+                flexDirection="column" // Set flexDirection to column
+                justifyContent="space-between" // Align items with space between them
+                minHeight="40vh" // Set a minimum height for the outer Box
             >
-                <Box
-                    height="40vh"
-                    width="100%"
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <Image
-                        padding={2}
-                        borderRadius="20px"
-                        src={post.image?.src}
-                        alt={post.image.source}
-                        height="100%"
-                        width="100%"
-                        objectFit="cover"
-                    />
+                <Box>
+                    <Box height="40vh" width="100%" justifyContent="center" alignItems="center">
+                        <Image
+                            padding={2}
+                            borderRadius="20px"
+                            src={post.image?.src}
+                            alt={post.image.source}
+                            height="100%"
+                            width="100%"
+                            objectFit="cover"
+                        />
+                    </Box>
                 </Box>
-                <TextPart />
+                <Box>
+                    <TextPart />
+                    <BottomPart />
+                </Box>
             </Box>
+
         )
     } else if (type === 'single') {
         return (
@@ -170,7 +181,10 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                         objectFit="cover"
                     />
                 </Box>
-                <TextPart />
+                <Box>
+                    <TextPart />
+                    <BottomPart />
+                </Box>
             </Box>
         )
     } else if (type === 'smallImageLeft') {
@@ -202,7 +216,10 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
 
                         />
                     </Box>
-                    <TextPart />
+                    <Box>
+                        <TextPart />
+                        <BottomPart />
+                    </Box>
                 </Flex>
             </Box>
 
@@ -216,8 +233,10 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 borderRadius="20px"
             >
                 <Flex alignItems="center">
-
-                    <TextPart />
+                    <Box>
+                        <TextPart />
+                        <BottomPart />
+                    </Box>
                     <Box
                         ml={4}
                         width="37vw"
