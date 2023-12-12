@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { CiShare2 } from "react-icons/ci";
+import { CiBookmark, CiShare2 } from "react-icons/ci";
 import { Post } from "../../types/Post";
 interface SingleArticleContainerProps {
     post: Post;
@@ -26,19 +26,30 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
         alert("Link copied to clipboard"); // change to toast
 
     };
-
+    function handleBookmark(postId: string) {
+        alert("Bookmark clicked: " +  postId); // change to toast
+    }
     const TextPart = () => {
         return (
             <Box
                 p={4}
             >
-                <Heading
-                    as="h2"
-                    size="md"
-                    mb={2}
-                >
-                    {post.title}
-                </Heading>
+                <Flex>
+                    <Heading
+                        as="h2"
+                        size="md"
+                        mb={2}
+                    >
+                        {post.title}
+                    </Heading>
+                    <Icon
+                    _hover={{ cursor: "pointer" }}
+                    onClick={() => handleBookmark(post.id)} 
+                        as={CiBookmark}
+                        ml={2}
+                        boxSize={5}
+                    />
+                </Flex>
                 <Text
                     fontSize="sm"
                     color="#FFFFFF"
