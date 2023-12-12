@@ -19,16 +19,7 @@ interface MobileHomeMainProps {
 }
 
 export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
-  const location = useLocation();
-  const currentUrl = window.location.origin + location.pathname;
   const multipliedPosts = Array(5).fill(posts).flat();
-
-  const handleCopyLink = (postId: string) => {
-    const linkToCopy = `${currentUrl}post/${postId}`;
-    navigator.clipboard.writeText(linkToCopy);
-    alert("Link copied to clipboard"); // change to toast
-
-  };
 
   enum ArticleStyle {
     Double = 'double',
