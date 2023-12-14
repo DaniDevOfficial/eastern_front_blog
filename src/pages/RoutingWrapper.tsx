@@ -2,6 +2,7 @@ import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
 import { ArticlePage, loadPost } from "./ArticlePage";
 import { HomePage } from "./HomePage";
 import { PageLayout } from "./PageLayout";
+import { Timeline } from "./Timline";
 
 export function RouterWrapper() {
   const router = createHashRouter([
@@ -18,6 +19,12 @@ export function RouterWrapper() {
           element: <ArticlePage />,
           loader: loadPost,
           errorElement: <div>Something went wrong</div>, // TODO: Replace this with a custom error page
+        },
+        {
+          path: "/timeline",
+          element: <Timeline />,
+          loader: loadPost,
+          errorElement: <div>Something went wrong</div>, 
         },
         {
           path: "*",
