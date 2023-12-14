@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     chakra,
@@ -26,14 +26,14 @@ const milestones = [
     },
     {
         id: 2,
-        date: 'July 30, 2021',
+        date: 'July 30, 2023',
         title: 'Open Source, first contribution',
         description: `Fixing a typo, to fix a bug, contributing to Open Source and collaborating to improve technology for everyone, Ahmad's world changed again!.`,
         link: 'gooogle.com'
     },
     {
         id: 3,
-        date: 'July 30, 2018',
+        date: 'Juli 30, 2018',
         title: 'Freelancing, started working for myself',
         description:
             'Ahmad starts his own business consulting for companies as a fullstack developer. Clients include UK Government departments, UK banks, global fintechs and startups.',
@@ -44,7 +44,15 @@ const milestones = [
 export const Timeline = () => {
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isDesktop = useBreakpointValue({ base: false, md: true });
-
+    
+    useEffect(() => {
+        milestones.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateA.getTime() - dateB.getTime();
+        });
+        console.log(milestones)
+    }, []);
     return (
         <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
             <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
@@ -98,11 +106,9 @@ function findIndexById(array, id) {
 const Card = ({ id, title, description, date }: CardProps) => {
 
     const indexInArray: number = findIndexById(milestones, id);
-
-    const isEvenIndex = (indexInArray + 1) % 2 === 0;
-
-    console.log('isEvenIndex', isEvenIndex);
-
+    console.log(indexInArray + " id: " + id)
+    const isEvenIndex = (indexInArray ) % 2 === 0;
+    console.log(isEvenIndex)
     let borderWidthValue = isEvenIndex ? '15px 15px 15px 0' : '15px 0 15px 15px';
     let leftValue = isEvenIndex ? '-15px' : 'unset';
     let rightValue = isEvenIndex ? 'unset' : '-15px';
