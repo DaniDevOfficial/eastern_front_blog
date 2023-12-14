@@ -15,6 +15,7 @@ import {
 
 } from '@chakra-ui/react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { getAllTimelineItems } from '../repo/repo';
 
 const milestones = [
     {
@@ -53,6 +54,17 @@ export const Timeline = () => {
         });
         console.log(milestones)
     }, []);
+
+    useEffect(() => {
+        getAllTimelineItems()
+          .then((Items) => {
+            console.log(Items)
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, []);
+
     return (
         <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
             <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
@@ -106,9 +118,7 @@ function findIndexById(array, id) {
 const Card = ({ id, title, description, date }: CardProps) => {
 
     const indexInArray: number = findIndexById(milestones, id);
-    console.log(indexInArray + " id: " + id)
     const isEvenIndex = (indexInArray ) % 2 !== 0;
-    console.log(isEvenIndex)
     let borderWidthValue = isEvenIndex ? '15px 15px 15px 0' : '15px 0 15px 15px';
     let leftValue = isEvenIndex ? '-15px' : 'unset';
     let rightValue = isEvenIndex ? 'unset' : '-15px';
