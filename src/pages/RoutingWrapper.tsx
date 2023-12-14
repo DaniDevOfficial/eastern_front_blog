@@ -1,6 +1,7 @@
 import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ArticlePage, loadPost } from "./ArticlePage";
 import { HomePage } from "./HomePage";
+import { Box } from "@chakra-ui/react";
 
 export function RouterWrapper() {
   const router = createBrowserRouter([
@@ -21,8 +22,11 @@ export function RouterWrapper() {
   ]);
 
   return (
-    <>
+    <Box
+    bgColor="#141417"
+
+    >
       <RouterProvider router={router} />
-    </>
+    </Box>
   );
 }

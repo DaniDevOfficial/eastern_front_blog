@@ -1,5 +1,5 @@
 
-import { Box, Heading, Text, Link as ChakraLink, Icon, Center } from "@chakra-ui/react";
+import { Box, Heading, Text, Link as ChakraLink, Icon, Center, Divider, Flex } from "@chakra-ui/react";
 import { Post } from "../../types/Post";
 import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
 import { Link as ReactRouterLink } from "react-router-dom";
@@ -12,7 +12,7 @@ interface LandingPageProps {
 export function LandingPage({ post: latestPost }: LandingPageProps) {
   return (
     <Box
-    overflowX={{ base: "hidden", md: "hidden" }}
+      overflowX="hidden"
     >
       <Center>
 
@@ -107,13 +107,14 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
 
       </Center>
 
-      <Box
-        position="relative"
-        left="50%"
+      <Flex
         marginTop="5vh"
         _hover={{ cursor: "pointer", color: "#" }}
-
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
       >
+        
         <Icon
           color="#FEC709"
           _hover={{
@@ -125,8 +126,44 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
           onClick={() => {
             window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
           }}
+          as={AiOutlineArrowDown}
+          boxSize={6}
+        />
+      </Flex>
 
-          as={AiOutlineArrowDown} boxSize={6} />
+      <Box
+        className="hr-lines"
+        maxW="500px"
+        mx="auto"
+        my="40px"
+        textAlign="center"
+        position="relative"
+      >
+        <Box
+          as="span"
+          pos="absolute"
+          top="50%"
+          left="0"
+          transform="translateY(-50%)"
+          h="2px"
+          w={{ md: "130px", base: "100px" }}
+          bg="#FEC709"
+          display="block"
+          content=""
+        />
+        <Box
+          as="span"
+          pos="absolute"
+          top="50%"
+          right="0"
+          transform="translateY(-50%)"
+          h="2px"
+          w={{ md: "130px", base: "100px" }}
+          bg="#FEC709"
+          display="block"
+          content=""
+        />
+        Ältere Artikel
       </Box>
     </Box>
   );
