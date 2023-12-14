@@ -58,10 +58,10 @@ export const Timeline = () => {
             <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
                 Milestones
             </chakra.h3>
-            {milestones.map((milestone) => (
+            {milestones.map((milestone, index) => (
                 <Flex key={milestone.id} mb="10px">
                     {/* Desktop view(left card) */}
-                    {isDesktop && milestone.id % 2 === 0 && (
+                    {isDesktop && (index + 1) % 2 === 0 && (
                         <>
                             <EmptyCard />
                             <LineWithDot />
@@ -78,7 +78,7 @@ export const Timeline = () => {
                     )}
 
                     {/* Desktop view(right card) */}
-                    {isDesktop && milestone.id % 2 !== 0 && (
+                    {isDesktop && (index + 1) % 2 !== 0 && (
                         <>
                             <Card {...milestone} />
 
@@ -107,7 +107,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
 
     const indexInArray: number = findIndexById(milestones, id);
     console.log(indexInArray + " id: " + id)
-    const isEvenIndex = (indexInArray ) % 2 === 0;
+    const isEvenIndex = (indexInArray ) % 2 !== 0;
     console.log(isEvenIndex)
     let borderWidthValue = isEvenIndex ? '15px 15px 15px 0' : '15px 0 15px 15px';
     let leftValue = isEvenIndex ? '-15px' : 'unset';
