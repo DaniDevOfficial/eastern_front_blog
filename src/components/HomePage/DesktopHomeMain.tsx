@@ -1,86 +1,62 @@
 import {
-  Box,
-  Heading,
-  Text,
-  Image,
-  Link as ChakraLink,
-  Icon,
+  Flex,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink, useLocation } from "react-router-dom";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { CiShare2 } from "react-icons/ci";
+
 import { Post } from "../../types/Post";
+import { SingleArticleContainer } from "./SingleArticleContainer";
 
 interface MobileHomeMainProps {
   posts: Post[];
 }
 
 export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
-  const location = useLocation();
-  const currentUrl = window.location.origin + location.pathname;
+  const multipliedPosts = Array(5).fill(posts).flat();
 
-  const handleCopyLink = (postId: string) => {
-    const linkToCopy = `${currentUrl}post/${postId}`;
-    navigator.clipboard.writeText(linkToCopy);
+  enum ArticleStyle {
+    Double = 'double',
+    Single = 'single',
+    SmallImageLeft = 'smallImageLeft',
+    SmallImageRight = 'smallImageRight',
+  }
+
+  const Article = ({ post, index }: { post: Post; index: number }) => {
+    let articleStyleClass: ArticleStyle = ArticleStyle.Double;
+
+    const pattern = [
+      ArticleStyle.Double,
+      ArticleStyle.Double,
+      ArticleStyle.Single,
+      ArticleStyle.SmallImageLeft,
+      ArticleStyle.SmallImageRight,
+      ArticleStyle.Double,
+      ArticleStyle.Double,
+      ArticleStyle.Single,
+      ArticleStyle.SmallImageLeft,
+      ArticleStyle.SmallImageRight,
+    ];
+
+    articleStyleClass = pattern[index % pattern.length];
+
+    return (
+      <SingleArticleContainer
+      
+        post={post}
+        type={articleStyleClass as "double" | "single" | "smallImageLeft" | "smallImageRight"}
+      />
+    );
   };
+
   return (
-    <Box
-      position="relative"
-      background="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))"
+    <Flex
+      flexWrap="wrap"
+      marginLeft="10vw"
+      mt="10vh"
+      gap="5vw"
     >
-      {posts.map((post) => (
-        <Box
-          key={post.id}
-          display="flex"
-          width="100%"
-          minHeight="0vh"
-          padding="100px 0"
-          flexWrap="wrap"
-        >
-          {/* Left Container */}
-          <Box flex="1" padding="4">
-            <Box display="flex" alignItems="center" justifyContent="center">
-              {post.image && (
-                <Image
-                  src={post.image?.src}
-                  alt={post.image.source}
-                  maxW="100%"
-                  maxH="100%"
-                />
-              )}
-            </Box>
-            <Box mt="4" bg="gray.700" p="2" borderRadius="md">
-              <Icon
-                as={CiShare2}
-                onClick={() => handleCopyLink(post.id)}
-                cursor="pointer"
-                marginLeft="10px"
-              />
-            </Box>
-          </Box>
-          {/* Right Container */}
-          <Box flex="1" padding="4">
-            <Heading>{post.title}</Heading>
-            <Text>
-              {/*TODO: Add author */}
-              Author: {/*post.author*/} | Posted on:{" "}
-              {post.published_at && post.published_at.toISOString()}
-            </Text>
-            <Text>{post.subtitle}</Text>
-            <ChakraLink
-              as={ReactRouterLink}
-              to={`/post/${post.id}`}
-              display="flex"
-              alignItems="center"
-              color="teal.500"
-              _hover={{ color: "teal.700" }}
-            >
-              Mehr lesen
-              <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
-            </ChakraLink>
-          </Box>
-        </Box>
+      {multipliedPosts.map((post, index) => (
+        <Article 
+        key={index} post={post} index={index} />
       ))}
-    </Box>
+    </Flex>
   );
 }
