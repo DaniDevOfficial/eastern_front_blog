@@ -16,50 +16,50 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { getAllTimelineItems } from '../repo/repo';
+import { TimelineItem } from '../types/Timeline';
 
 const milestones = [
     {
-        id: 1,
+        id: "1",
         date: 'MARCH 30, 2022',
         title: 'Chakra Hackathon',
         description: `Winner of first ever ChakraUI Hackathon. On sait depuis longtemps que travailler avec du texte lisible et contenant du sens.`,
         link: 'https://chakra-ui.com/hackathon'
     },
     {
-        id: 2,
+        id: "2",
         date: 'July 30, 2023',
         title: 'Open Source, first contribution',
         description: `Fixing a typo, to fix a bug, contributing to Open Source and collaborating to improve technology for everyone, Ahmad's world changed again!.`,
-        link: 'gooogle.com'
+        link: 'https://chakra-ui.com/hackathon'
     },
     {
-        id: 3,
+        id: "3",
         date: 'Juli 30, 2018',
         title: 'Freelancing, started working for myself',
         description:
             'Ahmad starts his own business consulting for companies as a fullstack developer. Clients include UK Government departments, UK banks, global fintechs and startups.',
-        link: 'david-bischof.ch'
+        link: 'https://chakra-ui.com/hackathon'
     }
 ];
 
 export const Timeline = () => {
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isDesktop = useBreakpointValue({ base: false, md: true });
-    
-    useEffect(() => {
-        milestones.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return dateA.getTime() - dateB.getTime();
-        });
-        console.log(milestones)
-    }, []);
+    const [timelineItems, setTimelineItems] = React.useState<TimelineItem[]>([]);
+
 
     useEffect(() => {
         getAllTimelineItems()
-          .then((Items) => {
-            console.log(Items)
-          })
+          .then((items) => {
+            items.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA.getTime() - dateB.getTime();
+            });
+            setTimelineItems(items);
+            console.log(items)
+        })
           .catch((error) => {
             console.error(error);
           });
@@ -68,16 +68,15 @@ export const Timeline = () => {
     return (
         <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
             <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
-                Milestones
+                Timeline 
             </chakra.h3>
-            {milestones.map((milestone, index) => (
-                <Flex key={milestone.id} mb="10px">
-                    {/* Desktop view(left card) */}
+            {timelineItems.map((timelineItem, index) => (
+                <Flex key={timelineItem.id} mb="10px">
                     {isDesktop && (index + 1) % 2 === 0 && (
                         <>
                             <EmptyCard />
                             <LineWithDot />
-                            <Card {...milestone} />
+                            <Card isLeft={true} {...timelineItem} />
                         </>
                     )}
 
@@ -85,14 +84,14 @@ export const Timeline = () => {
                     {isMobile && (
                         <>
                             <LineWithDot />
-                            <Card {...milestone} />
+                            <Card {...timelineItem} />
                         </>
                     )}
 
                     {/* Desktop view(right card) */}
                     {isDesktop && (index + 1) % 2 !== 0 && (
                         <>
-                            <Card {...milestone} />
+                            <Card isLeft={false} {...timelineItem} />
 
                             <LineWithDot />
                             <EmptyCard />
@@ -100,28 +99,30 @@ export const Timeline = () => {
                     )}
                 </Flex>
             ))}
+            
         </Container>
     );
 };
 
 interface CardProps {
-    id: number;
+    id: string;
     title: string;
     description: string;
     date: string;
+    link: string;
+    isLeft?: boolean;
 }
 
-function findIndexById(array, id) {
+function findIndexById(array: any[], id: string ) {
     return array.findIndex(item => item.id === id);
 }
 
-const Card = ({ id, title, description, date }: CardProps) => {
+const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
 
-    const indexInArray: number = findIndexById(milestones, id);
-    const isEvenIndex = (indexInArray ) % 2 !== 0;
-    let borderWidthValue = isEvenIndex ? '15px 15px 15px 0' : '15px 0 15px 15px';
-    let leftValue = isEvenIndex ? '-15px' : 'unset';
-    let rightValue = isEvenIndex ? 'unset' : '-15px';
+
+    let borderWidthValue = isLeft ? '15px 15px 15px 0' : '15px 0 15px 15px';
+    let leftValue = isLeft ? '-15px' : 'unset';
+    let rightValue = isLeft ? 'unset' : '-15px';
 
     const isMobile = useBreakpointValue({ base: true, md: false });
     if (isMobile) {
@@ -129,7 +130,9 @@ const Card = ({ id, title, description, date }: CardProps) => {
         rightValue = 'unset';
         borderWidthValue = '15px 15px 15px 0';
     }
-
+    const openLink = (link: URL) => {
+        window.open(link, '_blank');
+    }
     return (
         <HStack
             flex={1}
@@ -168,7 +171,8 @@ const Card = ({ id, title, description, date }: CardProps) => {
                     variant="outline"
                     display="flex"
                     alignItems="center"
-                    
+                    as={ChakraLink}
+                    onClick={() => openLink(new URL(link))}
                 >
                     Mehr lesen
                     <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />

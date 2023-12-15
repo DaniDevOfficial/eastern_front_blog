@@ -145,7 +145,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                             padding={2}
                             borderRadius="20px"
                             src={post.image?.src}
-                            alt={post.image.source}
+                            alt={post.image?.source ?? ''}
                             height="100%"
                             width="100%"
                             objectFit="cover"
@@ -176,7 +176,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                         padding={2}
                         borderRadius="20px"
                         src={post.image?.src}
-                        alt={post.image.source}
+                        alt={post.image?.source ?? ''}
                         height="100%"
                         width="100%"
                         objectFit="cover"
@@ -208,7 +208,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                         <Image
                             borderRadius="20px"
                             src={post.image?.src}
-                            alt={post.image.source}
+                            alt={post.image?.source ?? ''}
                             height="100%"
 
                             width="100%"
@@ -250,7 +250,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                         <Image
                             borderRadius="20px"
                             src={post.image?.src}
-                            alt={post.image.source}
+                            alt={post.image?.source ?? ''}
                             height="100%"
                             width="100%"
                             objectFit="cover"

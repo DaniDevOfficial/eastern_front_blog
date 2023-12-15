@@ -15,6 +15,7 @@ export function HomePage() {
         if (sortedPosts.length === 0) throw new Error("No posts found");
         setLatestPost(sortedPosts[0]);
         setPosts(sortedPosts.slice(1));
+        console.log(posts)
       })
       .catch((error) => {
         console.error(error);
