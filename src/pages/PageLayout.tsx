@@ -5,16 +5,21 @@ import { Footer } from "../components/Footer";
 
 export function PageLayout() {
   return (
-    <Flex justify={"center"} width={"100%"} bg="black">
+    <Flex justify={"center"} width={"100%"} bg="black" minHeight="100vh" flexDirection="column">
       <chakra.div
-        width={{ base: "100%", md: "100%", lg: "80%" }}
+        width={{ base: "100%", md: "100%", lg: "100%" }}
         height={"100%"}
         bg="bg.base"
+        flex="1"
+        display="flex"
+        flexDirection="column"
+        pb={10}
       >
         <NavBar />
         <Outlet />
-        <Footer />
       </chakra.div>
+      <Footer />
+
     </Flex>
   );
 }

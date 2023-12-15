@@ -150,7 +150,7 @@ const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
                     as={ChakraLink}
                     onClick={() => openLink(new URL(link))}
                 >
-                    Mehr lesen {link}
+                    Mehr lesen 
                     <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
                 </Button>
             </Box>
