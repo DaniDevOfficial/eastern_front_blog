@@ -20,6 +20,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const postCollection = collection(db, "posts");
 export const articleCollection = collection(db, "articles");
+export const timelineCollection = collection(db, "timelineitems");
 export const imagesCollection = collection(db, "images");
 // Initialize Storage
 const storage = getStorage(app);

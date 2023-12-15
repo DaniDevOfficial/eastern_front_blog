@@ -13,6 +13,7 @@ export interface Post {
  * Post data as stored in firestore
  */
 export interface FirestorePost {
+  date: any;
   article_id: string;
   image_id?: string;
   title: string;
