@@ -18,31 +18,6 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import { getAllTimelineItems } from '../repo/repo';
 import { TimelineItem } from '../types/Timeline';
 
-const milestones = [
-    {
-        id: "1",
-        date: 'MARCH 30, 2022',
-        title: 'Chakra Hackathon',
-        description: `Winner of first ever ChakraUI Hackathon. On sait depuis longtemps que travailler avec du texte lisible et contenant du sens.`,
-        link: 'https://chakra-ui.com/hackathon'
-    },
-    {
-        id: "2",
-        date: 'July 30, 2023',
-        title: 'Open Source, first contribution',
-        description: `Fixing a typo, to fix a bug, contributing to Open Source and collaborating to improve technology for everyone, Ahmad's world changed again!.`,
-        link: 'https://chakra-ui.com/hackathon'
-    },
-    {
-        id: "3",
-        date: 'Juli 30, 2018',
-        title: 'Freelancing, started working for myself',
-        description:
-            'Ahmad starts his own business consulting for companies as a fullstack developer. Clients include UK Government departments, UK banks, global fintechs and startups.',
-        link: 'https://chakra-ui.com/hackathon'
-    }
-];
-
 export const Timeline = () => {
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isDesktop = useBreakpointValue({ base: false, md: true });
@@ -131,6 +106,7 @@ const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
         borderWidthValue = '15px 15px 15px 0';
     }
     const openLink = (link: URL) => {
+        alert(link);
         window.open(link, '_blank');
     }
     return (
@@ -174,7 +150,7 @@ const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
                     as={ChakraLink}
                     onClick={() => openLink(new URL(link))}
                 >
-                    Mehr lesen
+                    Mehr lesen {link}
                     <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
                 </Button>
             </Box>
