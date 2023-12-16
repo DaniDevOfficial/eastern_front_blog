@@ -2,11 +2,13 @@ import {
   articleCollection,
   postCollection,
   imagesCollection,
+  timelineCollection,
 } from "../configs/firebase";
 import { Article } from "../types/Article";
 import { Post, FirestorePost } from "../types/Post";
 import { Image } from "../types/Image";
 import { getDoc, getDocs, doc } from "firebase/firestore";
+import { FirestoreTimelineItem, TimelineItem } from "../types/Timeline";
 
 // TODO: split this file into multiple files (one per entity)
 
@@ -48,6 +50,33 @@ export async function getAllPosts(): Promise<Post[]> {
   }
 }
 
+/**
+ * Fetches all Timeline Items from firestore
+ * @returns the posts
+ */
+export async function getAllTimelineItems(): Promise<TimelineItem[]> {
+  try {
+    console.log(timelineCollection)
+    const snapshot = await getDocs(timelineCollection);
+    const timelineItemPromises: Promise<TimelineItem>[] = snapshot.docs.map(
+      async (doc) => {
+        const data = doc.data() as FirestoreTimelineItem;
+
+        return {
+          id: data.id, 
+          date: data.date,
+          title: data.title,
+          description: data.description || '', // Assuming subtitle corresponds to 'description'
+          link: data.link, // You may need to modify this based on your data
+        };
+      }
+    );
+
+    return await Promise.all(timelineItemPromises);
+  } catch (e) {
+    throw new Error("Could not get timeline items:\n" + e);
+  }
+}
 /**
  * Fetches an image from firestore by id
  * @param id id of the image
