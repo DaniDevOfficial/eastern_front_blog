@@ -23,7 +23,6 @@ export function RouterWrapper() {
         {
           path: "/timeline",
           element: <Timeline />,
-          loader: loadPost,
           errorElement: <div>Something went wrong</div>, 
         },
         {

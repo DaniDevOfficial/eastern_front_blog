@@ -137,6 +137,7 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 flexDirection="column" 
                 justifyContent="space-between" 
                 minHeight="40vh"
+                mb={10}
             >
                 <Box>
                     <Box height="40vh" width="100%" justifyContent="center" alignItems="center">
@@ -164,6 +165,8 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 width="80vw"
                 backgroundColor="#1C1C20"
                 borderRadius="20px"
+                mb={10}
+
             >
                 <Box
                     height="50vh"
@@ -193,6 +196,8 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 width="80vw"
                 backgroundColor="#1C1C20"
                 borderRadius="20px"
+                mb={10}
+
             >
                 <Flex alignItems="center">
                     <Box
@@ -231,6 +236,8 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                 width="80vw"
                 backgroundColor="#1C1C20"
                 borderRadius="20px"
+                mb={10}
+
             >
                 <Flex alignItems="center">
                     <Box>
