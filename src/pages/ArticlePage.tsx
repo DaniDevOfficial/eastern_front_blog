@@ -53,7 +53,7 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
   try {
     article = {
       "id": "bMvD8RKtpCZ8bKRcFXUt",
-      "text": "# Russland positioniert 40.000 Soldaten für entscheidenden Angriff auf Awdijiwka In einer brisanten Entwicklung mobilisiert Russland Truppen an der Front in Awdijiwka, was von Beobachtern als potenzielle \"tödliche Sackgasse\" mit drohenden \"kolossalen Verlusten\" bezeichnet wird. Kiew – Trotz erheblicher Verluste zeigt sich Russland unbeeindruckt von der Situation in Awdijiwka. Bürgermeister Witali Barabasch warnt vor einer bevorstehenden \"dritten Angriffswelle\", und Berichte besagen, dass Russland plant, 40.000 Soldaten in der Stadt zu konzentrieren. Der Tagesspiegel zitiert ukrainische Quellen, die bereits fast 7.000 verlorene russische Soldaten an dieser Front melden, während der Kyiv Independent von einer möglichen 'tödlichen Sackgasse' spricht, in der Russlands Panzer in Awdijiwka in einem Hinterhalt geraten. Russland versucht offenbar, seine erschöpften Ressourcen sowohl an Material als auch an Personal in Awdijiwka wieder aufzufüllen, so der Bürgermeister. Unabhängige Überprüfungen der ukrainischen Angaben stehen noch aus. Der Bericht des US-Instituts für Kriegsstudien (ISW) im Oktober deutete jedoch darauf hin, dass Russland erhebliche Verluste in Ausrüstung und Personal erlitten hat. Ein Sieg in Awdijiwka wäre jedoch hauptsächlich symbolischer Natur im Kontext des Ukraine-Konflikts. Die Einschätzungen des ukrainischen Militärexperten Alexander Kowalenko weisen darauf hin, dass die Offensive in Awdijiwka möglicherweise als Ablenkungsmanöver dient, um die Gegenoffensive in der Region Saporischschja zu verschleiern. Kowalenko betonte, dass Russland im Sommer ähnliche Taktiken in anderen Gebieten angewendet habe, um die ukrainischen Streitkräfte abzulenken. Er geht davon aus, dass die russische Armee nun Einheiten aus der Region Luhansk verlegt. Die Aussichten für Russlands Kampf um Awdijiwka hängen laut Kowalenko von der \"Opferbereitschaft\" Moskaus ab. Er betont, dass es keine Verteidigung gibt, die nicht durchbrochen werden kann, und dass der Erfolg von den mobilisierten Ressourcen abhängt. Wenn Russland in Awdijiwka Fortschritte erzielen will, könnte dies jedoch mit erheblichen Verlusten einhergehen. Awdijiwka in der Ostukraine ist seit Beginn des Konflikts 2014 umkämpft. Die Stadt, einst Heimat von über 30.000 Einwohnern, beherbergt derzeit etwa 1600 Menschen. Russlands Bestrebungen in dieser Region bleiben ein entscheidender Faktor im anhaltenden Ukraine-Konflikt."
+      "text": " Russland positioniert 40.000 Soldaten für entscheidenden Angriff auf Awdijiwka In einer brisanten Entwicklung mobilisiert Russland Truppen an der Front in Awdijiwka, was von Beobachtern als potenzielle \"tödliche Sackgasse\" mit drohenden \"kolossalen Verlusten\" bezeichnet wird. Kiew – Trotz erheblicher Verluste zeigt sich Russland unbeeindruckt von der Situation in Awdijiwka. Bürgermeister Witali Barabasch warnt vor einer bevorstehenden \"dritten Angriffswelle\", und Berichte besagen, dass Russland plant, 40.000 Soldaten in der Stadt zu konzentrieren. Der Tagesspiegel zitiert ukrainische Quellen, die bereits fast 7.000 verlorene russische Soldaten an dieser Front melden, während der Kyiv Independent von einer möglichen 'tödlichen Sackgasse' spricht, in der Russlands Panzer in Awdijiwka in einem Hinterhalt geraten. Russland versucht offenbar, seine erschöpften Ressourcen sowohl an Material als auch an Personal in Awdijiwka wieder aufzufüllen, so der Bürgermeister. Unabhängige Überprüfungen der ukrainischen Angaben stehen noch aus. Der Bericht des US-Instituts für Kriegsstudien (ISW) im Oktober deutete jedoch darauf hin, dass Russland erhebliche Verluste in Ausrüstung und Personal erlitten hat. Ein Sieg in Awdijiwka wäre jedoch hauptsächlich symbolischer Natur im Kontext des Ukraine-Konflikts. Die Einschätzungen des ukrainischen Militärexperten Alexander Kowalenko weisen darauf hin, dass die Offensive in Awdijiwka möglicherweise als Ablenkungsmanöver dient, um die Gegenoffensive in der Region Saporischschja zu verschleiern. Kowalenko betonte, dass Russland im Sommer ähnliche Taktiken in anderen Gebieten angewendet habe, um die ukrainischen Streitkräfte abzulenken. Er geht davon aus, dass die russische Armee nun Einheiten aus der Region Luhansk verlegt. Die Aussichten für Russlands Kampf um Awdijiwka hängen laut Kowalenko von der \"Opferbereitschaft\" Moskaus ab. Er betont, dass es keine Verteidigung gibt, die nicht durchbrochen werden kann, und dass der Erfolg von den mobilisierten Ressourcen abhängt. Wenn Russland in Awdijiwka Fortschritte erzielen will, könnte dies jedoch mit erheblichen Verlusten einhergehen. Awdijiwka in der Ostukraine ist seit Beginn des Konflikts 2014 umkämpft. Die Stadt, einst Heimat von über 30.000 Einwohnern, beherbergt derzeit etwa 1600 Menschen. Russlands Bestrebungen in dieser Region bleiben ein entscheidender Faktor im anhaltenden Ukraine-Konflikt."
     }
 
   } catch (error: any) {
@@ -74,7 +74,9 @@ export function ArticlePage() {
   return (
     <>
       <Container maxW="container.lg" mt="10vh">
-        <Flex>
+        <Flex
+          mb={10}
+        >
           <Heading as="h1" size="2xl" mb={4}>
             {post.title}
           </Heading>
@@ -126,6 +128,43 @@ export function ArticlePage() {
             </Text>
           </Flex>
         </Flex>
+        <Image
+          src={post.image.src}
+          alt={post.image.description}
+          mb={4}
+          borderRadius={10}
+          width="100%"
+          maxH="70vh"
+          fit={"cover"}
+        />
+        <Flex
+          justifyContent="space-between"
+
+        >
+          <Text mb={2}
+            color="grey"
+
+          >
+            {post.image.description}
+          </Text>
+          <Text mb={2}
+            color="grey"
+
+          >
+            {post.image.source}
+          </Text>
+        </Flex>
+        <Divider />
+        <chakra.div
+          mt={4}
+          color="#FFFFFF"
+        >
+          <ReactMarkdown
+            components={ChakraUIRenderer()}
+          >
+            {article.text}
+          </ReactMarkdown>
+        </chakra.div>
       </Container>
 
     </>
