@@ -14,6 +14,7 @@ import {
   Spacer,
   Text,
   chakra,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
@@ -70,8 +71,8 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
 
 export function ArticlePage() {
   const { post, article } = useLoaderData() as LoaderData;
-  const [olderPosts, setOlderPosts] = useState([]);
-
+  const [olderPosts, setOlderPosts] = useState<Post[]>([]);
+  const screen = useBreakpointValue({ base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl" });
 
   enum ArticleStyle {
     Double = 'double',
@@ -82,14 +83,12 @@ export function ArticlePage() {
 
   const Article = ({ post, index }: { post: Post; index: number }) => {
     let articleStyleClass: ArticleStyle = ArticleStyle.Double;
-
-    const pattern = [
-
-      ArticleStyle.SmallImageLeft,
-      ArticleStyle.SmallImageRight,
-
-    ];
-
+    let pattern = []
+    
+      pattern = [
+        ArticleStyle.Single,
+      ]
+    
     articleStyleClass = pattern[index % pattern.length];
 
     return (
@@ -105,13 +104,9 @@ export function ArticlePage() {
       .then((posts) => {
         const sortedPosts = posts
         if (sortedPosts.length === 0) throw new Error("No posts found");
-
         const latestPostId = sortedPosts[0]?.id;
-
         const olderPosts = sortedPosts.filter((post) => post.id !== latestPostId);
-
         const topTwoOlderPosts = olderPosts.slice(0, 2);
-
         setOlderPosts(topTwoOlderPosts);
         console.log(posts);
       })
