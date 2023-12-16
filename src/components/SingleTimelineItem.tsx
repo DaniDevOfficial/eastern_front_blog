@@ -18,7 +18,7 @@ export const SingleTimelineItem = ({ events }) => {
               justify="center"
               color="white"
             >
-              {index + 1}
+              {index + 1} 
             </Box>
             <VStack align="flex-start" spacing={2} p={4} bg="gray.100">
               <Text fontWeight="bold">{event.title}</Text>

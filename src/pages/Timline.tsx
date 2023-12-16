@@ -142,7 +142,14 @@ const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
                         {title}
                     </chakra.h1>
                     <Text fontSize="md">{description}</Text>
+                    
                 </VStack>
+                <Text
+                fontSize={5}
+                color={"gray.500"}
+                >
+                    Quelle: <ChakraLink href={link}>{link}</ChakraLink>
+                </Text>
                 <Button
                     variant="outline"
                     display="flex"
