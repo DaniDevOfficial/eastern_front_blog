@@ -66,8 +66,9 @@ export async function getAllTimelineItems(): Promise<TimelineItem[]> {
           id: data.id, 
           date: data.date,
           title: data.title,
-          description: data.description || '', // Assuming subtitle corresponds to 'description'
-          link: data.link, // You may need to modify this based on your data
+          description: data.description || '', 
+          link: data.link,
+          readat: data.readat,
         };
       }
     );

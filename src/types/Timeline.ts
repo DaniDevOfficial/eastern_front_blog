@@ -3,6 +3,7 @@ export interface TimelineItem {
   date: string;
   title: string;
   description: string;
+  readat: string;
   link: URL;
 }
 
@@ -10,6 +11,7 @@ export interface TimelineItem {
     description: string;
     date: string;
     title: string;
+    readat: string;
     link: URL;
   }
   

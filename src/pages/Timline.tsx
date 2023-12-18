@@ -85,6 +85,7 @@ interface CardProps {
     description: string;
     date: string;
     link: string;
+    readat: string;
     isLeft?: boolean;
 }
 
@@ -92,7 +93,7 @@ function findIndexById(array: any[], id: string ) {
     return array.findIndex(item => item.id === id);
 }
 
-const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
+const Card = ({ id, title, description, date, link, readat,  isLeft }: CardProps) => {
 
 
     let borderWidthValue = isLeft ? '15px 15px 15px 0' : '15px 0 15px 15px';
@@ -150,6 +151,11 @@ const Card = ({ id, title, description, date, link, isLeft }: CardProps) => {
                 >
                     Quelle: <ChakraLink href={link}>{link}</ChakraLink>
                 </Text>
+                <Text
+                fontSize={5}
+                color={"gray.500"}
+                >
+                    Gelesen Am: {readat}</Text>
                 <Button
                     variant="outline"
                     display="flex"
