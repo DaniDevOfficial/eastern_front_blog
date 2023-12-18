@@ -5,7 +5,7 @@ import { Footer } from "../components/Footer";
 
 export function PageLayout() {
   return (
-    <Flex justify={"center"} width={"100%"} bg="black">
+    <Flex justify={"center"} width={"100%"} height={"100%"} bg="black">
       <chakra.div
         width={{ base: "100%", md: "80%", lg: "65%" }}
         height={"100%"}

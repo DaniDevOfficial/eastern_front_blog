@@ -2,6 +2,8 @@ import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
 import { ArticlePage, loadPost } from "./ArticlePage";
 import { HomePage } from "./HomePage";
 import { PageLayout } from "./PageLayout";
+import { AdminPage } from "./AdminPage";
+import { PostUploadPage } from "./PostUploadPage";
 
 const router = createHashRouter([
   {
@@ -19,6 +21,14 @@ const router = createHashRouter([
         errorElement: <div>Something went wrong</div>, // TODO: Replace this with a custom error page
       },
       {
+        path: "/admin",
+        element: <AdminPage />,
+      },
+      {
+        path: "/admin/upload/post",
+        element: <PostUploadPage />,
+      },
+      {
         path: "*",
         element: <Navigate to="/" />,
       },
@@ -27,8 +37,5 @@ const router = createHashRouter([
 ]);
 
 export function RouterWrapper() {
-
-  return (
-      <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }

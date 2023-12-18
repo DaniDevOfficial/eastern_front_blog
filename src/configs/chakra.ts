@@ -28,6 +28,12 @@ const components: { [key: string]: ComponentStyleConfig } = {
       // TOOD: add font family
     },
   },
+  Input: {
+    baseStyle: {
+      color: "white",
+      focusBorderColor: "accent.base",
+    },
+  },
   Divider: {
     baseStyle: {
       rounded: "full",
