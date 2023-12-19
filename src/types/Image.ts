@@ -10,3 +10,9 @@ export interface Image {
   source: string;
   description?: string;
 }
+
+export interface FirestoreImage {
+  src: string;
+  source: string;
+  description?: string;
+}
