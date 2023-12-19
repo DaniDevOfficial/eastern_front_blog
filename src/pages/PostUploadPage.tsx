@@ -123,8 +123,6 @@ export function PostUploadPage() {
               isInvalid={triedToSubmit && isInvalidString(title)}
             >
               <Input
-                focusBorderColor="accent.base"
-                color={"white"}
                 placeholder="Titel"
                 onChange={(event) => setTitle(event.target.value)}
                 value={title}
@@ -139,8 +137,6 @@ export function PostUploadPage() {
               isInvalid={triedToSubmit && isInvalidString(teaser)}
             >
               <Input
-                focusBorderColor="accent.base"
-                color={"white"}
                 placeholder="Teaser"
                 onChange={(event) => setTeaser(event.target.value)}
                 value={teaser}
@@ -183,8 +179,6 @@ export function PostUploadPage() {
               }
             >
               <Input
-                focusBorderColor="accent.base"
-                color={"white"}
                 placeholder="Bild beschreibung"
                 onChange={(event) => setImageDescription(event.target.value)}
                 value={imageDescription}
@@ -202,8 +196,6 @@ export function PostUploadPage() {
               }
             >
               <Input
-                focusBorderColor="accent.base"
-                color={"white"}
                 placeholder="Bild quelle"
                 onChange={(event) => setImageSource(event.target.value)}
                 value={imageSource}

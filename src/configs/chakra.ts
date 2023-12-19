@@ -1,4 +1,4 @@
-import { ComponentStyleConfig, extendTheme } from "@chakra-ui/react";
+import { ComponentStyleConfig, FormLabel, extendTheme } from "@chakra-ui/react";
 import { Tokens } from "../../.mirrorful/theme";
 
 const colors = {
@@ -30,8 +30,20 @@ const components: { [key: string]: ComponentStyleConfig } = {
   },
   Input: {
     baseStyle: {
-      color: "white",
-      focusBorderColor: "accent.base",
+      field: {
+        color: "white",
+      },
+    },
+    variants: {
+      outline: {
+        field: {
+          _focus: {
+            borderColor: "accent.base",
+            borderWidth: "2px",
+            boxShadow: "none",
+          },
+        },
+      },
     },
   },
   Divider: {
@@ -46,11 +58,6 @@ const components: { [key: string]: ComponentStyleConfig } = {
       _hover: {
         color: "accent.700",
       },
-    },
-  },
-  ListItem: {
-    baseStyle: {
-      color: "white",
     },
   },
 };
