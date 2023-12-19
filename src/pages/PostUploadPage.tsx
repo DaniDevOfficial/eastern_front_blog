@@ -10,9 +10,14 @@ import {
   Skeleton,
   SkeletonText,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Form } from "../components/Form";
 import { ChangeEvent, useEffect, useState } from "react";
+import { createPost } from "../repo/repo";
+import { useNavigate } from "react-router-dom";
+import ChakraUIRenderer from "chakra-ui-markdown-renderer";
+import ReactMarkdown from "react-markdown";
 
 export function PostUploadPage() {
   const [title, setTitle] = useState<string>();
@@ -24,8 +29,11 @@ export function PostUploadPage() {
 
   const [imagePreview, setImagePreview] = useState<string>();
   const [triedToSubmit, setTriedToSubmit] = useState(false);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
-  function handleUploadFormSubmit() {
+  async function handleUploadFormSubmit() {
     setTriedToSubmit(true);
     if (
       isInvalidString(title) ||
@@ -37,7 +45,39 @@ export function PostUploadPage() {
       return;
     }
 
-    alert("TODO: Upload Post");
+    try {
+      setIsLoading(true);
+      const id = await createPost({
+        title: title!,
+        subTitle: teaser!,
+        image: {
+          file: image!,
+          description: imageDescription!,
+          source: imageSource!,
+        },
+        article: article!,
+      });
+      setIsLoading(false);
+      toast({
+        title: "Post erfolgreich hochgeladen",
+        description: "Der Post wurde erfolgreich hochgeladen",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate(`/post/${id}`);
+    } catch (error: any) {
+      setIsLoading(false);
+      toast({
+        title: "Fehler beim Hochladen des Posts",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
   }
 
   function isInvalidString(string: string | undefined) {
@@ -155,7 +195,11 @@ export function PostUploadPage() {
               label="Bild quelle"
               helperText="Bild quelle"
               errorText="Bitte gib eine Bild quelle an."
-              isInvalid={triedToSubmit && !isInvalidString(image?.name) && isInvalidString(imageSource)}
+              isInvalid={
+                triedToSubmit &&
+                !isInvalidString(image?.name) &&
+                isInvalidString(imageSource)
+              }
             >
               <Input
                 focusBorderColor="accent.base"
@@ -185,7 +229,9 @@ export function PostUploadPage() {
                 rows={10}
               />
             </Form>
-            <Button onClick={handleUploadFormSubmit}>Hochladen</Button>
+            <Button isDisabled={isLoading} onClick={handleUploadFormSubmit}>
+              Hochladen
+            </Button>
           </VStack>
         </chakra.div>
         <chakra.div
@@ -231,7 +277,9 @@ export function PostUploadPage() {
             >
               {article?.split("\n").map((paragraph, index) => (
                 <chakra.div key={index}>
-                  <Text>{paragraph}</Text>
+                  <ReactMarkdown components={ChakraUIRenderer()} key={index}>
+                    {paragraph}
+                  </ReactMarkdown>
                 </chakra.div>
               ))}
             </SkeletonText>
