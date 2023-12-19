@@ -4,12 +4,14 @@ import {
   imagesCollection,
   timelineCollection,
   adminCollection,
+  imageStorage,
 } from "../configs/firebase";
 import { Article } from "../types/Article";
 import { Post, FirestorePost } from "../types/Post";
-import { Image } from "../types/Image";
-import { getDoc, getDocs, doc } from "firebase/firestore";
+import { FirestoreImage, Image } from "../types/Image";
+import { getDoc, getDocs, doc, addDoc } from "firebase/firestore";
 import { FirestoreTimelineItem, TimelineItem } from "../types/Timeline";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 // TODO: split this file into multiple files (one per entity)
 
@@ -105,6 +107,23 @@ async function getImageById(id: string): Promise<Image> {
   }
 }
 
+async function uploadImageToStorage(image: File): Promise<string> {
+  try {
+    // Create a storage reference
+    const storageRef = ref(imageStorage, image.name);
+
+    // Upload the image to Firebase
+    const snapshot = await uploadBytes(storageRef, image);
+
+    // Get the download URL of the uploaded image
+    const url = await getDownloadURL(snapshot.ref);
+
+    return url;
+  } catch (e) {
+    throw new Error("Could not upload image:\n" + e);
+  }
+}
+
 /**
  * Fetches an article from firestore by id
  * @param id id of the article
@@ -175,5 +194,84 @@ export async function isAdmin(uid: string): Promise<boolean> {
   } catch (e) {
     console.error(e);
     return false;
+  }
+}
+
+/**
+ * Uploads an image to firestore and returns the id of the image
+ * @param image the image to upload
+ * @returns the id of the uploaded image
+ */
+async function createImage(image: FirestoreImage): Promise<string> {
+  try {
+    const docRef = await addDoc(imagesCollection, image);
+
+    return docRef.id;
+  } catch (e) {
+    throw new Error("Could not create image:\n" + e);
+  }
+}
+
+async function createArticle(article: string): Promise<string> {
+  try {
+    const docRef = await addDoc(articleCollection, { text: article });
+
+    return docRef.id;
+  } catch (e) {
+    throw new Error("Could not create article:\n" + e);
+  }
+}
+
+interface CreatePostInput {
+  title: string;
+  subTitle: string;
+  article: string;
+  image: CreatePostImageInput;
+}
+
+interface CreatePostImageInput {
+  file: File;
+  source: string;
+  description: string;
+}
+
+/**
+ * Uploads a post to firestore and returns the id of the created post
+ * @param input the post to upload
+ * @returns the id of the created post
+ */
+export async function createPost(input: CreatePostInput): Promise<string> {
+  let post: Partial<FirestorePost> = {
+    title: input.title,
+    subtitle: input.subTitle,
+    published_at: new Date().toLocaleDateString(),
+  };
+  if (input.image) {
+    try {
+      const image: FirestoreImage = {
+        src: await uploadImageToStorage(input.image.file),
+        source: input.image.source,
+        description: input.image.description,
+      };
+
+      post.image_id = await createImage(image);
+    } catch (e) {
+      throw new Error("Could not upload image:\n" + e);
+    }
+  }
+  try {
+    const article_id = await createArticle(input.article);
+
+    post.article_id = article_id;
+  } catch (e) {
+    throw new Error("Could not upload article:\n" + e);
+  }
+
+  try {
+    const docRef = await addDoc(postCollection, post);
+
+    return docRef.id;
+  } catch (e) {
+    throw new Error("Could not create post:\n" + e);
   }
 }
