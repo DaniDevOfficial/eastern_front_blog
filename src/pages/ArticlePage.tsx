@@ -32,21 +32,7 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
   let post: Post;
   let article: Article;
   try {
-    post = {
-      "article_id": "bMvD8RKtpCZ8bKRcFXUt",
-      "id": "BoXwv6a33wvYUf5q2kTa",
-      "image": {
-        "id": "JMSz06sqDtNB7EZE2xtQ",
-        "src": "https://firebasestorage.googleapis.com/v0/b/eastern-front-blog.appspot.com/o/articles%2Fimages%2FSoldaten.jpeg?alt=media&token=5b96f395-30fc-4b47-86ba-7687817e3f5a",
-        "source": "test.de",
-        "description": "Soldaten"
-      },
-      "published_at": "20 Feb 2021",
-      "author": "Sanju Para",
-      "subtitle": "Russland positioniert 40.000 Soldaten für entscheidenden Angriff auf Awdijiwka. In einer brisanten Entwicklung mobilisiert Russland Truppen an der Front in Awdijiwka, was von Beobachtern als potenzielle 'tödliche Sackgasse' mit drohenden 'kolossalen Verlusten' bezeichnet wird. Kiew – Trotz erheblicher Verluste zeigt sich Russland unbeeindruckt von der Situation in Awdijiwka.",
-      "title": "Russland positioniert 40.000 Soldaten für entscheidenden Angriff auf Awdijiwka"
-    } // can cahnge to getPostById(id)
-
+    post = await getPostById(id);
 
   } catch (error: any) {
     console.error(error);
@@ -55,10 +41,8 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
     });
   }
   try {
-    article = {
-      "id": "bMvD8RKtpCZ8bKRcFXUt",
-      "text": " Russland positioniert 40.000 Soldaten für entscheidenden Angriff auf Awdijiwka In einer brisanten Entwicklung mobilisiert Russland Truppen an der Front in Awdijiwka, was von Beobachtern als potenzielle \"tödliche Sackgasse\" mit drohenden \"kolossalen Verlusten\" bezeichnet wird. Kiew – Trotz erheblicher Verluste zeigt sich Russland unbeeindruckt von der Situation in Awdijiwka. Bürgermeister Witali Barabasch warnt vor einer bevorstehenden \"dritten Angriffswelle\", und Berichte besagen, dass Russland plant, 40.000 Soldaten in der Stadt zu konzentrieren. Der Tagesspiegel zitiert ukrainische Quellen, die bereits fast 7.000 verlorene russische Soldaten an dieser Front melden, während der Kyiv Independent von einer möglichen 'tödlichen Sackgasse' spricht, in der Russlands Panzer in Awdijiwka in einem Hinterhalt geraten. Russland versucht offenbar, seine erschöpften Ressourcen sowohl an Material als auch an Personal in Awdijiwka wieder aufzufüllen, so der Bürgermeister. Unabhängige Überprüfungen der ukrainischen Angaben stehen noch aus. Der Bericht des US-Instituts für Kriegsstudien (ISW) im Oktober deutete jedoch darauf hin, dass Russland erhebliche Verluste in Ausrüstung und Personal erlitten hat. Ein Sieg in Awdijiwka wäre jedoch hauptsächlich symbolischer Natur im Kontext des Ukraine-Konflikts. Die Einschätzungen des ukrainischen Militärexperten Alexander Kowalenko weisen darauf hin, dass die Offensive in Awdijiwka möglicherweise als Ablenkungsmanöver dient, um die Gegenoffensive in der Region Saporischschja zu verschleiern. Kowalenko betonte, dass Russland im Sommer ähnliche Taktiken in anderen Gebieten angewendet habe, um die ukrainischen Streitkräfte abzulenken. Er geht davon aus, dass die russische Armee nun Einheiten aus der Region Luhansk verlegt. Die Aussichten für Russlands Kampf um Awdijiwka hängen laut Kowalenko von der \"Opferbereitschaft\" Moskaus ab. Er betont, dass es keine Verteidigung gibt, die nicht durchbrochen werden kann, und dass der Erfolg von den mobilisierten Ressourcen abhängt. Wenn Russland in Awdijiwka Fortschritte erzielen will, könnte dies jedoch mit erheblichen Verlusten einhergehen. Awdijiwka in der Ostukraine ist seit Beginn des Konflikts 2014 umkämpft. Die Stadt, einst Heimat von über 30.000 Einwohnern, beherbergt derzeit etwa 1600 Menschen. Russlands Bestrebungen in dieser Region bleiben ein entscheidender Faktor im anhaltenden Ukraine-Konflikt."
-    } // can change to getArticleById(id)
+
+    article = await getArticleById(post.article_id);
 
   } catch (error: any) {
     return new Response(JSON.stringify({ message: error.message }), {
@@ -69,6 +53,8 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
   return { post: post, article: article } as LoaderData;
 }
 
+let articlev2 = await getArticleById("bMvD8RKtpCZ8bKRcFXUt");
+console.log(articlev2)
 export function ArticlePage() {
   const { post, article } = useLoaderData() as LoaderData;
   const [olderPosts, setOlderPosts] = useState<Post[]>([]);
@@ -84,11 +70,11 @@ export function ArticlePage() {
   const Article = ({ post, index }: { post: Post; index: number }) => {
     let articleStyleClass: ArticleStyle = ArticleStyle.Double;
     let pattern = []
-    
-      pattern = [
-        ArticleStyle.Single,
-      ]
-    
+
+    pattern = [
+      ArticleStyle.Single,
+    ]
+
     articleStyleClass = pattern[index % pattern.length];
 
     return (
@@ -108,7 +94,6 @@ export function ArticlePage() {
         const olderPosts = sortedPosts.filter((post) => post.id !== latestPostId);
         const topTwoOlderPosts = olderPosts.slice(0, 2);
         setOlderPosts(topTwoOlderPosts);
-        console.log(posts);
       })
       .catch((error) => {
         console.error(error);
@@ -151,13 +136,12 @@ export function ArticlePage() {
             color="grey"
 
           >
-            {post.author}
+            Sanju Para
           </Text>
           <Text mb={2}
             color="grey"
 
           >
-            {post.published_at}
           </Text>
           <Flex>
 
@@ -248,12 +232,17 @@ export function ArticlePage() {
           />
           Ältere Artikel
         </Box>
+
+      </Container>
+      <Box
+            marginLeft="10vw"
+
+      >
         {olderPosts.map((post, index) => (
           <Article
             key={index} post={post} index={index} />
         ))}
-      </Container>
-
+      </Box>
     </>
   );
 }
