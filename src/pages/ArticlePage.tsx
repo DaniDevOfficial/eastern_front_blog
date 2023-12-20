@@ -191,11 +191,19 @@ export function ArticlePage() {
           mb={4}
           color="#FFFFFF"
         >
-          <ReactMarkdown
-            components={ChakraUIRenderer()}
-          >
-            {article.text}
-          </ReactMarkdown>
+      <Container>
+        {article.text
+          .replaceAll("\\n", "\n")
+          .split("\n")
+          .map((paragraph, index) => (
+            <chakra.div key={index}>
+              <ReactMarkdown components={ChakraUIRenderer()} key={index}>
+                {paragraph}
+              </ReactMarkdown>
+            </chakra.div>
+          ))}
+      </Container>
+
         </chakra.div>
 
         <Box
