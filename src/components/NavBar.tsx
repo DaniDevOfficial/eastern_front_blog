@@ -1,17 +1,26 @@
 import { CloseIcon, HamburgerIcon, Search2Icon } from "@chakra-ui/icons";
 import {
+  Avatar,
   Button,
   ButtonGroup,
   Flex,
   HStack,
   Heading,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   VStack,
   chakra,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
+import { User, getAuth, signInWithPopup } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { googleProvider } from "../configs/firebase";
+import { isAdmin as checkIfAdmin } from "../repo/repo";
 
 const pages = [
   { name: "Timeline", path: "/timeline" },
@@ -25,6 +34,14 @@ const song = new Audio(
 );
 
 export function NavBar() {
+  const auth = getAuth();
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const toast = useToast({
+    duration: 5000,
+    isClosable: true,
+    position: "top-right",
+  });
   const [clicked, setClicked] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
 
@@ -34,6 +51,37 @@ export function NavBar() {
       setClicked(0);
     }
   }, [clicked]);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((u) => {
+      setUser(u);
+
+      if (u) {
+        checkIfAdmin(u.uid).then(setIsAdmin);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  function handleLogin() {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        toast({
+          title: "Login erfolgreich",
+          description: `Willkommen zurück, ${result.user.displayName}!`,
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.code === "auth/popup-closed-by-user") return;
+        toast({
+          title: "Login fehlgeschlagen",
+          description: error.code,
+          status: "error",
+        });
+      });
+  }
 
   return (
     <chakra.div marginBottom={{ base: 2, md: 5 }}>
@@ -71,6 +119,7 @@ export function NavBar() {
         <HStack gap={10} display={{ base: "none", md: "inherit" }}>
           {pages.map((page) => (
             <Heading
+              key={page.path}
               as={Link}
               to={page.path}
               fontSize={{ md: "lg", lg: "xl" }}
@@ -91,12 +140,45 @@ export function NavBar() {
             _hover={{ bg: "transparent", transform: "scale(1.2)" }}
             onClick={() => alert("TODO: Implement Search")}
           />
-          <Button
-            onClick={() => alert("TODO: Implement Login")}
-            _hover={{ transform: "scale(1.05)" }}
-          >
-            Login
-          </Button>
+          {user ? (
+            <Menu>
+              <MenuButton
+                as={Button}
+                variant={"ghost"}
+                _hover={{ bg: "transparent", transform: "scale(1.1)" }}
+                _active={{ bg: "transparent" }}
+              >
+                <Avatar
+                  size={"sm"}
+                  name={user!.displayName ?? undefined}
+                  src={user!.photoURL ?? undefined}
+                />
+              </MenuButton>
+              <MenuList>
+                {isAdmin && (
+                  <MenuItem as={Link} to={"/admin"}>
+                    Admin
+                  </MenuItem>
+                )}
+                <MenuItem as={Link} to={"/profile"}>
+                  Profil
+                </MenuItem>
+                <MenuItem>
+                  <Button
+                    colorScheme="red"
+                    onClick={() => auth.signOut()}
+                    width={"100%"}
+                  >
+                    Logout
+                  </Button>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <Button onClick={handleLogin} _hover={{ transform: "scale(1.05)" }}>
+              Login
+            </Button>
+          )}
         </ButtonGroup>
       </Flex>
       {/* Mobile Nav Links */}
@@ -104,6 +186,7 @@ export function NavBar() {
         <VStack>
           {pages.map((page) => (
             <Heading
+              key={page.path}
               as={Link}
               to={page.path}
               onClick={onClose}

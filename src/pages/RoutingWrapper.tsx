@@ -3,7 +3,6 @@ import { ArticlePage, loadPost } from "./ArticlePage";
 import { HomePage } from "./HomePage";
 import { PageLayout } from "./PageLayout";
 import { Timeline } from "./Timline";
-import { LoginPage } from "./LoginPage";
 
 export function RouterWrapper() {
   const router = createHashRouter([
@@ -25,10 +24,6 @@ export function RouterWrapper() {
           path: "/timeline",
           element: <Timeline />,
           errorElement: <div>Something went wrong</div>,
-        },
-        {
-          path: "/login",
-          element: <LoginPage />,
         },
         {
           path: "*",

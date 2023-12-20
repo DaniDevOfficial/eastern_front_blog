@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, collection, getDoc, getDocs } from "firebase/firestore";
 import { getStorage, getDownloadURL, ref } from "firebase/storage";
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,8 +23,9 @@ export const postCollection = collection(db, "posts");
 export const articleCollection = collection(db, "articles");
 export const timelineCollection = collection(db, "timelineitems");
 export const imagesCollection = collection(db, "images");
+export const adminCollection = collection(db, "admin");
 // Initialize Storage
 const storage = getStorage(app);
 export const imageStorage = ref(storage, "articles/images");
 
-// TODO: Add Auth service
+export const googleProvider = new GoogleAuthProvider();
