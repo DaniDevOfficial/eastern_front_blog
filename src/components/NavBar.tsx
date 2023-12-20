@@ -1,8 +1,14 @@
-import { CloseIcon, HamburgerIcon, Search2Icon } from "@chakra-ui/icons";
+import {
+  CloseIcon,
+  HamburgerIcon,
+  Search2Icon,
+  SmallCloseIcon,
+} from "@chakra-ui/icons";
 import {
   Avatar,
   Button,
   ButtonGroup,
+  ButtonProps,
   Flex,
   HStack,
   Heading,
@@ -11,14 +17,15 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
   VStack,
   chakra,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { User, getAuth, signInWithPopup } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { googleProvider } from "../configs/firebase";
 import { isAdmin as checkIfAdmin } from "../repo/repo";
 
@@ -35,6 +42,7 @@ const song = new Audio(
 
 export function NavBar() {
   const auth = getAuth();
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const toast = useToast({
@@ -142,37 +150,55 @@ export function NavBar() {
           />
           {user ? (
             <Menu>
-              <MenuButton
-                as={Button}
-                variant={"ghost"}
-                _hover={{ bg: "transparent", transform: "scale(1.1)" }}
-                _active={{ bg: "transparent" }}
-              >
-                <Avatar
-                  size={"sm"}
-                  name={user!.displayName ?? undefined}
-                  src={user!.photoURL ?? undefined}
-                />
-              </MenuButton>
-              <MenuList>
-                {isAdmin && (
-                  <MenuItem as={Link} to={"/admin"}>
-                    Admin
-                  </MenuItem>
-                )}
-                <MenuItem as={Link} to={"/profile"}>
-                  Profil
-                </MenuItem>
-                <MenuItem>
-                  <Button
-                    colorScheme="red"
-                    onClick={() => auth.signOut()}
-                    width={"100%"}
+              {({ onClose }) => (
+                <>
+                  <MenuButton
+                    as={Button}
+                    variant={"ghost"}
+                    _hover={{ bg: "transparent", transform: "scale(1.1)" }}
+                    _active={{ bg: "transparent", transform: "scale(1.1)" }}
                   >
-                    Logout
-                  </Button>
-                </MenuItem>
-              </MenuList>
+                    <Avatar
+                      size={"sm"}
+                      name={user!.displayName ?? undefined}
+                      src={user!.photoURL ?? undefined}
+                    />
+                  </MenuButton>
+                  <MenuList bg="gray.100" paddingX={2} paddingY={2}>
+                    <Flex
+                      justify={"space-between"}
+                      align={"center"}
+                      width={"100%"}
+                    >
+                      <Text color={"black"} fontWeight={"medium"}>
+                        {user!.displayName ?? user!.email ?? ""}
+                      </Text>
+                      <IconButton
+                        onClick={onClose}
+                        variant={"ghost"}
+                        color={"black"}
+                        _hover={{ bg: "transparent", transform: "scale(1.5)" }}
+                        aria-label="Schließen"
+                        icon={<SmallCloseIcon />}
+                      />
+                    </Flex>
+                    {isAdmin && (
+                      <AvatarMenuIcon onClick={() => navigate("/admin")}>
+                        Admin
+                      </AvatarMenuIcon>
+                    )}
+                    <AvatarMenuIcon
+                      onClick={() => navigate("/profile")}
+                      marginBottom={2}
+                    >
+                      Profil
+                    </AvatarMenuIcon>
+                    <AvatarMenuIcon onClick={() => auth.signOut()}>
+                      Logout
+                    </AvatarMenuIcon>
+                  </MenuList>
+                </>
+              )}
             </Menu>
           ) : (
             <Button onClick={handleLogin} _hover={{ transform: "scale(1.05)" }}>
@@ -200,5 +226,26 @@ export function NavBar() {
         </VStack>
       </Flex>
     </chakra.div>
+  );
+}
+
+function AvatarMenuIcon({
+  onClick,
+  children,
+  ...rest
+}: PropsWithChildren<ButtonProps>) {
+  return (
+    <MenuItem
+      paddingY={3}
+      marginBottom={1}
+      _first={{ roundedTop: "md" }}
+      _last={{ roundedBottom: "md" }}
+      _hover={{ bg: "gray.200" }}
+      onFocus={(e) => e.target.blur()}
+      {...rest}
+      onClick={onClick}
+    >
+      {children}
+    </MenuItem>
   );
 }
