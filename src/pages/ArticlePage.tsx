@@ -18,8 +18,8 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import { CiBookmark, CiClock1 } from "react-icons/ci";
-import { useEffect, useState } from "react";
+import { CiBookmark, CiClock1, CiVolume, CiVolumeHigh } from "react-icons/ci";
+import { useEffect, useRef, useState } from "react";
 import { SingleArticleContainer } from "../components/HomePage/SingleArticleContainer";
 
 interface LoaderData {
@@ -53,8 +53,6 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
   return { post: post, article: article } as LoaderData;
 }
 
-let articlev2 = await getArticleById("bMvD8RKtpCZ8bKRcFXUt");
-console.log(articlev2)
 export function ArticlePage() {
   const { post, article } = useLoaderData() as LoaderData;
   const [olderPosts, setOlderPosts] = useState<Post[]>([]);
@@ -88,10 +86,11 @@ export function ArticlePage() {
   useEffect(() => {
     getAllPosts()
       .then((posts) => {
-        const sortedPosts = posts
+        const sortedPosts = posts;
         if (sortedPosts.length === 0) throw new Error("No posts found");
+        const currentArticleId = post.id;
         const latestPostId = sortedPosts[0]?.id;
-        const olderPosts = sortedPosts.filter((post) => post.id !== latestPostId);
+        const olderPosts = sortedPosts.filter((post) => post.id !== currentArticleId && post.id !== latestPostId);
         const topTwoOlderPosts = olderPosts.slice(0, 2);
         setOlderPosts(topTwoOlderPosts);
       })
@@ -103,13 +102,26 @@ export function ArticlePage() {
     throw new Error("Function not implemented.");
   }
 
+  const textRef = useRef<HTMLDivElement>();
+  function TextToSpeach(): void {
+    const utterance = new SpeechSynthesisUtterance(textRef.current?.innerText ?? "");
+
+    utterance.lang = "de-DE";
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    speechSynthesis.speak(utterance);
+  }
   return (
     <>
       <Container maxW="container.lg" mt="10vh">
         <Flex
           mb={10}
         >
-          <Heading as="h1" size="2xl" mb={4}>
+          <Heading as="h1" size="2xl" mb={4}
+
+          >
             {post.title}
           </Heading>
           <Icon
@@ -147,7 +159,7 @@ export function ArticlePage() {
 
             <Text mb={2}
               color="grey"
-
+              _hover={{ cursor: "pointer" }}
             >
               6 min
               <Icon
@@ -157,7 +169,17 @@ export function ArticlePage() {
                 boxSize={5}
               />
             </Text>
+
+            <Text mb={2} ml={10} color={"grey"} onClick={() => TextToSpeach()} _hover={{ cursor: "pointer" }}>
+              Vorlesen
+              <Icon
+                as={CiVolumeHigh}
+                ml={2}
+                boxSize={5}
+              />
+            </Text>
           </Flex>
+
         </Flex>
         <Image
           src={post.image.src}
@@ -191,18 +213,18 @@ export function ArticlePage() {
           mb={4}
           color="#FFFFFF"
         >
-      <Container>
-        {article.text
-          .replaceAll("\\n", "\n")
-          .split("\n")
-          .map((paragraph, index) => (
-            <chakra.div key={index}>
-              <ReactMarkdown components={ChakraUIRenderer()} key={index}>
-                {paragraph}
-              </ReactMarkdown>
-            </chakra.div>
-          ))}
-      </Container>
+          <Container ref={textRef}>
+            {article.text
+              .replaceAll("\\n", "\n")
+              .split("\n")
+              .map((paragraph, index) => (
+                <chakra.div key={index}>
+                  <ReactMarkdown components={ChakraUIRenderer()} key={index}>
+                    {paragraph}
+                  </ReactMarkdown>
+                </chakra.div>
+              ))}
+          </Container>
 
         </chakra.div>
 
@@ -243,7 +265,7 @@ export function ArticlePage() {
 
       </Container>
       <Box
-            marginLeft="10vw"
+        marginLeft="10vw"
 
       >
         {olderPosts.map((post, index) => (
