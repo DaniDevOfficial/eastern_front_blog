@@ -3,6 +3,7 @@ import {
   postCollection,
   imagesCollection,
   timelineCollection,
+  adminCollection,
 } from "../configs/firebase";
 import { Article } from "../types/Article";
 import { Post, FirestorePost } from "../types/Post";
@@ -56,17 +57,17 @@ export async function getAllPosts(): Promise<Post[]> {
  */
 export async function getAllTimelineItems(): Promise<TimelineItem[]> {
   try {
-    console.log(timelineCollection)
+    console.log(timelineCollection);
     const snapshot = await getDocs(timelineCollection);
     const timelineItemPromises: Promise<TimelineItem>[] = snapshot.docs.map(
       async (doc) => {
         const data = doc.data() as FirestoreTimelineItem;
 
         return {
-          id: data.id, 
+          id: data.id,
           date: data.date,
           title: data.title,
-          description: data.description || '', 
+          description: data.description || "",
           link: data.link,
           readat: data.readat,
         };
@@ -159,5 +160,20 @@ export async function getPostById(id: string): Promise<Post> {
     } as Post;
   } catch (e) {
     throw new Error("Could not get post:\n" + e);
+  }
+}
+
+export async function isAdmin(uid: string): Promise<boolean> {
+  try {
+    const snapshot = await getDoc(doc(adminCollection, uid));
+
+    if (!snapshot.exists()) {
+      return false;
+    }
+
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
   }
 }

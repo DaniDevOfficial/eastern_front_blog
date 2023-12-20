@@ -23,7 +23,7 @@ export function RouterWrapper() {
         {
           path: "/timeline",
           element: <Timeline />,
-          errorElement: <div>Something went wrong</div>, 
+          errorElement: <div>Something went wrong</div>,
         },
         {
           path: "*",
@@ -33,7 +33,5 @@ export function RouterWrapper() {
     },
   ]);
 
-  return (
-      <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
