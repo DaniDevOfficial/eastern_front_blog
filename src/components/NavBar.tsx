@@ -9,14 +9,22 @@ import {
   Button,
   ButtonGroup,
   ButtonProps,
+  Divider,
   Flex,
   HStack,
   Heading,
+  Highlight,
   IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Modal,
+  ModalContent,
+  ModalOverlay,
   Text,
   VStack,
   chakra,
@@ -27,7 +35,8 @@ import { User, getAuth, signInWithPopup } from "firebase/auth";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { googleProvider } from "../configs/firebase";
-import { isAdmin as checkIfAdmin } from "../repo/repo";
+import { isAdmin as checkIfAdmin, getAllPosts } from "../repo/repo";
+import { Post } from "../types/Post";
 
 const pages = [
   { name: "Timeline", path: "/timeline" },
@@ -41,6 +50,10 @@ const song = new Audio(
 );
 
 export function NavBar() {
+  const [searchInput, setSearchInput] = useState("");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+
   const auth = getAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
@@ -52,6 +65,42 @@ export function NavBar() {
   });
   const [clicked, setClicked] = useState(0);
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const {
+    isOpen: isSearchOpen,
+    onClose: onSearchClose,
+    onOpen: onSearchOpen,
+  } = useDisclosure({ defaultIsOpen: false });
+
+  useEffect(() => {
+    if (!searchInput) {
+      setFilteredPosts([]);
+      return;
+    }
+
+    const search = searchInput.toLowerCase();
+
+    const filtered = posts.filter((post) => {
+      const title = post.title.toLowerCase();
+
+      return title.includes(search);
+    });
+
+    setFilteredPosts(filtered);
+  }, [searchInput]);
+
+  function handleSearch(id: string) {
+    navigate(`/post/${id}`);
+    onSearchBarClose();
+  }
+
+  function onSearchBarClose() {
+    setSearchInput("");
+    onSearchClose();
+  }
+
+  useEffect(() => {
+    getAllPosts().then(setPosts);
+  }, []);
 
   useEffect(() => {
     if (clicked >= 20) {
@@ -93,6 +142,59 @@ export function NavBar() {
 
   return (
     <chakra.div marginBottom={{ base: 2, md: 5 }}>
+      <Modal size={"lg"} isOpen={isSearchOpen} onClose={onSearchBarClose}>
+        <ModalOverlay />
+        <ModalContent padding={2}>
+          <VStack gap={3}>
+            <InputGroup>
+              <InputLeftElement>
+                <Search2Icon color={"bg-highlight"} />
+              </InputLeftElement>
+              <Input
+                fontWeight={"medium"}
+                borderColor="transparent"
+                focusBorderColor="transparent"
+                _hover={{ borderColor: "transparent" }}
+                placeholder="Suche einen Post"
+                autoFocus
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+            </InputGroup>
+            {filteredPosts.length > 0 && (
+              <>
+                <Divider />
+                <VStack gap={2} width={"100%"}>
+                  {filteredPosts.map((post, i) => (
+                    <Button
+                      key={i}
+                      onClick={() => handleSearch(post.id)}
+                      paddingY={6}
+                      width={"100%"}
+                      colorScheme="gray"
+                    >
+                      <Text
+                        textOverflow={"ellipsis"}
+                        overflow={"hidden"}
+                        width={"100%"}
+                        color={"black"}
+                        textAlign={"left"}
+                      >
+                        <Highlight
+                          styles={{ bg: "accent.base" }}
+                          query={searchInput}
+                        >
+                          {post.title}
+                        </Highlight>
+                      </Text>
+                    </Button>
+                  ))}
+                </VStack>
+              </>
+            )}
+          </VStack>
+        </ModalContent>
+      </Modal>
       <Flex
         justify={"space-between"}
         align={"center"}
@@ -146,7 +248,7 @@ export function NavBar() {
             variant={"ghost"}
             color={"white"}
             _hover={{ bg: "transparent", transform: "scale(1.2)" }}
-            onClick={() => alert("TODO: Implement Search")}
+            onClick={onSearchOpen}
           />
           {user ? (
             <Menu>
