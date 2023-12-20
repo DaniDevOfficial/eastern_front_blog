@@ -1,5 +1,5 @@
 
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData, useLocation } from "react-router-dom";
 import { getAllPosts, getArticleById, getPostById } from "../repo/repo";
 import { Post } from "../types/Post";
 import { Article } from "../types/Article";
@@ -56,6 +56,7 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
 export function ArticlePage() {
   const { post, article } = useLoaderData() as LoaderData;
   const [olderPosts, setOlderPosts] = useState<Post[]>([]);
+  const [readingTime, setReadingTime] = useState<number>(0);
   const screen = useBreakpointValue({ base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl" });
 
   enum ArticleStyle {
@@ -82,7 +83,8 @@ export function ArticlePage() {
       />
     );
   };
-
+  const location = useLocation();
+  
   useEffect(() => {
     getAllPosts()
       .then((posts) => {
@@ -97,12 +99,17 @@ export function ArticlePage() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+      let text = textRef.current?.innerText;
+      let wordCount: any = text?.split(/\s/).filter(function (n) { return n !== ''; }).length;
+      setReadingTime(Math.ceil(wordCount / 200))
+      // scroll to top
+      window.scrollTo(0, 0);
+  }, [location]);
   function handleBookmark(id: string): void {
     throw new Error("Function not implemented.");
   }
 
-  const textRef = useRef<HTMLDivElement>();
+  const textRef = useRef<HTMLDivElement | null>(null);
   function TextToSpeach(): void {
     const utterance = new SpeechSynthesisUtterance(textRef.current?.innerText ?? "");
 
@@ -161,7 +168,7 @@ export function ArticlePage() {
               color="grey"
               _hover={{ cursor: "pointer" }}
             >
-              6 min
+              {readingTime} min
               <Icon
                 _hover={{ cursor: "pointer" }}
                 as={CiClock1}
@@ -182,8 +189,8 @@ export function ArticlePage() {
 
         </Flex>
         <Image
-          src={post.image.src}
-          alt={post.image.description}
+          src={post.image?.src}
+          alt={post.image?.description}
           mb={4}
           borderRadius={10}
           width="100%"
@@ -198,13 +205,13 @@ export function ArticlePage() {
             color="grey"
 
           >
-            {post.image.description}
+            {post.image?.description}
           </Text>
           <Text mb={2}
             color="grey"
 
           >
-            {post.image.source}
+            {post.image?.source}
           </Text>
         </Flex>
         <Divider />
@@ -213,7 +220,7 @@ export function ArticlePage() {
           mb={4}
           color="#FFFFFF"
         >
-          <Container ref={textRef}>
+          <Container ref={textRef} maxW="80vw">
             {article.text
               .replaceAll("\\n", "\n")
               .split("\n")

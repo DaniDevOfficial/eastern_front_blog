@@ -107,7 +107,6 @@ export function SingleArticleContainer({ post, type }: SingleArticleContainerPro
                         fontSize="sm"
                         color="gray.400"
                     >
-                        Time To read
                     </Text>
                     <Box
                         display="flex"
