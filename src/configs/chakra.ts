@@ -28,10 +28,44 @@ const components: { [key: string]: ComponentStyleConfig } = {
       // TOOD: add font family
     },
   },
+  Input: {
+    baseStyle: {
+      field: {
+        color: "white",
+      },
+    },
+    variants: {
+      outline: {
+        field: {
+          _focus: {
+            borderColor: "accent.base",
+            borderWidth: "2px",
+            boxShadow: "none",
+          },
+        },
+      },
+    },
+  },
   Divider: {
     baseStyle: {
       rounded: "full",
       opacity: 1,
+    },
+  },
+  Link: {
+    baseStyle: {
+      color: "accent.base",
+      _hover: {
+        color: "accent.700",
+      },
+    },
+  },
+};
+
+const styles = {
+  global: {
+    li: {
+      color: "white",
     },
   },
 };
@@ -39,4 +73,5 @@ const components: { [key: string]: ComponentStyleConfig } = {
 export const theme = extendTheme({
   colors,
   components,
+  styles,
 });
