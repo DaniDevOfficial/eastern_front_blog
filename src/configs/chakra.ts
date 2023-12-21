@@ -1,4 +1,4 @@
-import { ComponentStyleConfig, FormLabel, extendTheme } from "@chakra-ui/react";
+import { ComponentStyleConfig, extendTheme } from "@chakra-ui/react";
 import { Tokens } from "../../.mirrorful/theme";
 
 const colors = {
