@@ -44,6 +44,7 @@ export async function getAllPosts(): Promise<Post[]> {
         title: data.title,
         subtitle: data.subtitle,
         published_at: published_at,
+        author: data.author,
       } as Post;
     });
 
@@ -175,6 +176,7 @@ export async function getPostById(id: string): Promise<Post> {
       title: data.title,
       subtitle: data.subtitle,
       published_at: published_at,
+      author: data.author,
     } as Post;
   } catch (e) {
     throw new Error("Could not get post:\n" + e);
@@ -225,6 +227,7 @@ interface CreatePostInput {
   title: string;
   subTitle: string;
   article: string;
+  author?: string;
   image: CreatePostImageInput;
 }
 
@@ -244,6 +247,7 @@ export async function createPost(input: CreatePostInput): Promise<string> {
     title: input.title,
     subtitle: input.subTitle,
     published_at: new Date().toLocaleDateString(),
+    author: input.author,
   };
   if (input.image) {
     try {

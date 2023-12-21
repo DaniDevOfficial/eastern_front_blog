@@ -1,8 +1,17 @@
-import { Box, Heading, Text, Link as ChakraLink, Icon, Center, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Link as ChakraLink,
+  Icon,
+  Center,
+  Flex,
+} from "@chakra-ui/react";
 import { Post } from "../../types/Post";
 import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CiBookmark, CiClock1 } from "react-icons/ci";
+import { Utils } from "../../dateUtils";
 
 interface LandingPageProps {
   post: Post;
@@ -10,23 +19,21 @@ interface LandingPageProps {
 
 export function LandingPage({ post: latestPost }: LandingPageProps) {
   return (
-    <Box
-      overflowX="hidden"
-    >
+    <Box overflowX="hidden">
       <Center>
-
         <Box
           position="relative"
           marginTop="10vh"
           height="80vh"
           backgroundImage={
-            latestPost ? `url(${latestPost.image?.src})` : "url(placeholder.jpg)"
+            latestPost
+              ? `url(${latestPost.image?.src})`
+              : "url(placeholder.jpg)"
           }
           backgroundSize="cover"
           backgroundPosition="center"
           width="80%"
           borderRadius="10px"
-
         >
           <Box
             position="absolute"
@@ -36,7 +43,6 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             height="100%"
             background="rgba(0, 0, 0, 0.4)"
             borderRadius="10px"
-
           />
           <Box
             position="absolute"
@@ -50,10 +56,11 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             alignItems="center"
           >
             <Text fontSize="1rem" padding="0 10px">
-              Author
+              {latestPost?.author ?? ""}
             </Text>
             <Text fontSize="1rem" padding="0 10px">
-              Date
+              {!!latestPost?.published_at &&
+                Utils.formatMessageDate(latestPost.published_at)}
             </Text>
             <Box display="flex" alignItems="center" padding="0 10px">
               <Icon as={CiClock1} boxSize={5} />
@@ -70,7 +77,6 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             textAlign={{ base: "center", md: "left" }}
             paddingRight={{ base: "10vw", md: "70%" }}
             paddingLeft={{ base: "10vw", md: "3vw" }}
-
             color="white"
             paddingBottom={{ base: "5%", md: "5%" }}
           >
@@ -89,7 +95,6 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
                 color="#FEC709"
                 border={{ base: "1px solid #FEC709" }}
                 borderRadius="10px"
-
               >
                 <ChakraLink
                   as={ReactRouterLink}
@@ -103,7 +108,6 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             )}
           </Box>
         </Box>
-
       </Center>
 
       <Flex
@@ -113,7 +117,6 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
         justifyContent="center"
         alignItems="center"
       >
-        
         <Icon
           color="#FEC709"
           _hover={{

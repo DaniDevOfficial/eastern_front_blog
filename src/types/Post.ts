@@ -7,6 +7,7 @@ export interface Post {
   title: string;
   subtitle: string;
   published_at?: Date; // can be unpublished
+  author?: string;
 }
 
 /**
@@ -19,4 +20,5 @@ export interface FirestorePost {
   title: string;
   subtitle: string;
   published_at?: string;
+  author?: string;
 }

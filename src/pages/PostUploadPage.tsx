@@ -18,8 +18,10 @@ import { createPost } from "../repo/repo";
 import { useNavigate } from "react-router-dom";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
+import { getAuth } from "firebase/auth";
 
 export function PostUploadPage() {
+  const auth = getAuth();
   const [title, setTitle] = useState<string>();
   const [teaser, setTeaser] = useState<string>();
   const [image, setImage] = useState<File>();
@@ -56,6 +58,8 @@ export function PostUploadPage() {
           source: imageSource!,
         },
         article: article!,
+        author:
+          auth.currentUser?.displayName ?? auth.currentUser?.email ?? undefined,
       });
       setIsLoading(false);
       toast({
