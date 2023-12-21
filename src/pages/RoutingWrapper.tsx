@@ -4,6 +4,7 @@ import { HomePage } from "./HomePage";
 import { PageLayout } from "./PageLayout";
 import { AdminPage } from "./AdminPage";
 import { PostUploadPage } from "./PostUploadPage";
+import { TimelineItemUploadPage } from "./TimelineItemUploadPage";
 
 const router = createHashRouter([
   {
@@ -27,6 +28,10 @@ const router = createHashRouter([
       {
         path: "/admin/upload/post",
         element: <PostUploadPage />,
+      },
+      {
+        path: "/admin/upload/timeline",
+        element: <TimelineItemUploadPage />,
       },
       {
         path: "*",

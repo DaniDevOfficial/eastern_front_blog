@@ -9,7 +9,9 @@ export function AdminPage() {
         <Button onClick={() => navigage("/admin/upload/post")}>
           Upload Article
         </Button>
-        <Button>Upload Timeline Item</Button>
+        <Button onClick={() => navigage("/admin/upload/timeline")}>
+          Upload Timeline Item
+        </Button>
       </ButtonGroup>
     </Flex>
   );
