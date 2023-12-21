@@ -25,7 +25,12 @@ export function Footer() {
         align={{ base: "center", md: "inherit" }}
       >
         {pages.map((page) => (
-          <Text as={Link} to={page.path} _hover={{ transform: "scale(1.05)" }}>
+          <Text
+            key={page.path}
+            as={Link}
+            to={page.path}
+            _hover={{ transform: "scale(1.05)" }}
+          >
             {page.name}
           </Text>
         ))}
