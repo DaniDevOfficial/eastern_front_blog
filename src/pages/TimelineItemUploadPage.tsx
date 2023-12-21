@@ -1,18 +1,15 @@
 import {
   Button,
-  Flex,
   Heading,
   Input,
-  SkeletonText,
   VStack,
   chakra,
   useToast,
-  Text,
   Textarea,
 } from "@chakra-ui/react";
-import { useState, useEffect, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Form } from "../components/Form";
+import { createTimelineItem } from "../repo/repo";
 
 export function TimelineItemUploadPage() {
   const [title, setTitle] = useState<string>();
@@ -39,7 +36,13 @@ export function TimelineItemUploadPage() {
 
     try {
       setIsLoading(true);
-      // TODO: Create Timeline Item
+      await createTimelineItem({
+        title: title!,
+        description: description!,
+        link: link!,
+        date: date!,
+        readat: dateOfVisit!,
+      });
       setIsLoading(false);
       toast({
         title: "Post erfolgreich hochgeladen",
@@ -49,6 +52,11 @@ export function TimelineItemUploadPage() {
         isClosable: true,
         position: "top",
       });
+      setTitle("");
+      setDescription("");
+      setLink("");
+      setDate("");
+      setDateOfVisit("");
     } catch (error: any) {
       setIsLoading(false);
       toast({

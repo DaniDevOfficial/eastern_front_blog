@@ -59,14 +59,13 @@ export async function getAllPosts(): Promise<Post[]> {
  */
 export async function getAllTimelineItems(): Promise<TimelineItem[]> {
   try {
-    console.log(timelineCollection);
     const snapshot = await getDocs(timelineCollection);
     const timelineItemPromises: Promise<TimelineItem>[] = snapshot.docs.map(
       async (doc) => {
         const data = doc.data() as FirestoreTimelineItem;
 
         return {
-          id: data.id,
+          id: doc.id,
           date: data.date,
           title: data.title,
           description: data.description || "",
@@ -104,23 +103,6 @@ async function getImageById(id: string): Promise<Image> {
     } as Image;
   } catch (e) {
     throw new Error("Could not get image:\n" + e);
-  }
-}
-
-async function uploadImageToStorage(image: File): Promise<string> {
-  try {
-    // Create a storage reference
-    const storageRef = ref(imageStorage, image.name);
-
-    // Upload the image to Firebase
-    const snapshot = await uploadBytes(storageRef, image);
-
-    // Get the download URL of the uploaded image
-    const url = await getDownloadURL(snapshot.ref);
-
-    return url;
-  } catch (e) {
-    throw new Error("Could not upload image:\n" + e);
   }
 }
 
@@ -290,5 +272,17 @@ export async function createPost(input: CreatePostInput): Promise<string> {
     return docRef.id;
   } catch (e) {
     throw new Error("Could not create post:\n" + e);
+  }
+}
+
+export async function createTimelineItem(
+  item: FirestoreTimelineItem
+): Promise<string> {
+  try {
+    const docRef = await addDoc(timelineCollection, item);
+
+    return docRef.id;
+  } catch (e) {
+    throw new Error("Could not create timeline item:\n" + e);
   }
 }
