@@ -124,6 +124,23 @@ async function uploadImageToStorage(image: File): Promise<string> {
   }
 }
 
+async function uploadImageToStorage(image: File): Promise<string> {
+  try {
+    // Create a storage reference
+    const storageRef = ref(imageStorage, image.name);
+
+    // Upload the image to Firebase
+    const snapshot = await uploadBytes(storageRef, image);
+
+    // Get the download URL of the uploaded image
+    const url = await getDownloadURL(snapshot.ref);
+
+    return url;
+  } catch (e) {
+    throw new Error("Could not upload image:\n" + e);
+  }
+}
+
 /**
  * Fetches an article from firestore by id
  * @param id id of the article
