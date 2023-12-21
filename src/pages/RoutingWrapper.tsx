@@ -6,6 +6,7 @@ import { Timeline } from "./Timline";
 import { AdminPage } from "./AdminPage";
 import { PostUploadPage } from "./PostUploadPage";
 import { TimelineItemUploadPage } from "./TimelineItemUploadPage";
+import { AdminRoute } from "../routes/AdminRoute";
 
 const router = createHashRouter([
   {
@@ -29,15 +30,25 @@ const router = createHashRouter([
       },
       {
         path: "/admin",
-        element: <AdminPage />,
-      },
-      {
-        path: "/admin/upload/post",
-        element: <PostUploadPage />,
-      },
-      {
-        path: "/admin/upload/timeline",
-        element: <TimelineItemUploadPage />,
+        element: <AdminRoute />,
+        children: [
+          {
+            index: true, // Same Route as Parent: "/admin"
+            element: <AdminPage />,
+          },
+          {
+            path: "/admin/upload/post",
+            element: <PostUploadPage />,
+          },
+          {
+            path: "/admin/upload/timeline",
+            element: <TimelineItemUploadPage />,
+          },
+          {
+            path: "*",
+            element: <Navigate to="/admin" />,
+          },
+        ],
       },
       {
         path: "*",
