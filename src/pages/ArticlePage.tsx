@@ -1,5 +1,5 @@
 
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData, useLocation } from "react-router-dom";
 import { getAllPosts, getArticleById, getPostById } from "../repo/repo";
 import { Post } from "../types/Post";
 import { Article } from "../types/Article";
@@ -18,8 +18,8 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import { CiBookmark, CiClock1 } from "react-icons/ci";
-import { useEffect, useState } from "react";
+import { CiBookmark, CiClock1, CiVolume, CiVolumeHigh } from "react-icons/ci";
+import { useEffect, useRef, useState } from "react";
 import { SingleArticleContainer } from "../components/HomePage/SingleArticleContainer";
 
 interface LoaderData {
@@ -53,11 +53,10 @@ export async function loadPost({ params }: LoaderFunctionArgs) {
   return { post: post, article: article } as LoaderData;
 }
 
-let articlev2 = await getArticleById("bMvD8RKtpCZ8bKRcFXUt");
-console.log(articlev2)
 export function ArticlePage() {
   const { post, article } = useLoaderData() as LoaderData;
   const [olderPosts, setOlderPosts] = useState<Post[]>([]);
+  const [readingTime, setReadingTime] = useState<number>(0);
   const screen = useBreakpointValue({ base: "base", sm: "sm", md: "md", lg: "lg", xl: "xl" });
 
   enum ArticleStyle {
@@ -84,32 +83,52 @@ export function ArticlePage() {
       />
     );
   };
-
+  const location = useLocation();
+  
   useEffect(() => {
     getAllPosts()
       .then((posts) => {
-        const sortedPosts = posts
+        const sortedPosts = posts;
         if (sortedPosts.length === 0) throw new Error("No posts found");
+        const currentArticleId = post.id;
         const latestPostId = sortedPosts[0]?.id;
-        const olderPosts = sortedPosts.filter((post) => post.id !== latestPostId);
+        const olderPosts = sortedPosts.filter((post) => post.id !== currentArticleId && post.id !== latestPostId);
         const topTwoOlderPosts = olderPosts.slice(0, 2);
         setOlderPosts(topTwoOlderPosts);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+      let text = textRef.current?.innerText;
+      let wordCount: any = text?.split(/\s/).filter(function (n) { return n !== ''; }).length;
+      setReadingTime(Math.ceil(wordCount / 200))
+      // scroll to top
+      window.scrollTo(0, 0);
+  }, [location]);
   function handleBookmark(id: string): void {
     throw new Error("Function not implemented.");
   }
 
+  const textRef = useRef<HTMLDivElement | null>(null);
+  function TextToSpeach(): void {
+    const utterance = new SpeechSynthesisUtterance(textRef.current?.innerText ?? "");
+
+    utterance.lang = "de-DE";
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    speechSynthesis.speak(utterance);
+  }
   return (
     <>
       <Container maxW="container.lg" mt="10vh">
         <Flex
           mb={10}
         >
-          <Heading as="h1" size="2xl" mb={4}>
+          <Heading as="h1" size="2xl" mb={4}
+
+          >
             {post.title}
           </Heading>
           <Icon
@@ -147,9 +166,9 @@ export function ArticlePage() {
 
             <Text mb={2}
               color="grey"
-
+              _hover={{ cursor: "pointer" }}
             >
-              6 min
+              {readingTime} min
               <Icon
                 _hover={{ cursor: "pointer" }}
                 as={CiClock1}
@@ -157,11 +176,21 @@ export function ArticlePage() {
                 boxSize={5}
               />
             </Text>
+
+            <Text mb={2} ml={10} color={"grey"} onClick={() => TextToSpeach()} _hover={{ cursor: "pointer" }}>
+              Vorlesen
+              <Icon
+                as={CiVolumeHigh}
+                ml={2}
+                boxSize={5}
+              />
+            </Text>
           </Flex>
+
         </Flex>
         <Image
-          src={post.image.src}
-          alt={post.image.description}
+          src={post.image?.src}
+          alt={post.image?.description}
           mb={4}
           borderRadius={10}
           width="100%"
@@ -176,13 +205,13 @@ export function ArticlePage() {
             color="grey"
 
           >
-            {post.image.description}
+            {post.image?.description}
           </Text>
           <Text mb={2}
             color="grey"
 
           >
-            {post.image.source}
+            {post.image?.source}
           </Text>
         </Flex>
         <Divider />
@@ -191,18 +220,18 @@ export function ArticlePage() {
           mb={4}
           color="#FFFFFF"
         >
-      <Container>
-        {article.text
-          .replaceAll("\\n", "\n")
-          .split("\n")
-          .map((paragraph, index) => (
-            <chakra.div key={index}>
-              <ReactMarkdown components={ChakraUIRenderer()} key={index}>
-                {paragraph}
-              </ReactMarkdown>
-            </chakra.div>
-          ))}
-      </Container>
+          <Container ref={textRef} maxW="80vw">
+            {article.text
+              .replaceAll("\\n", "\n")
+              .split("\n")
+              .map((paragraph, index) => (
+                <chakra.div key={index}>
+                  <ReactMarkdown components={ChakraUIRenderer()} key={index}>
+                    {paragraph}
+                  </ReactMarkdown>
+                </chakra.div>
+              ))}
+          </Container>
 
         </chakra.div>
 
@@ -243,7 +272,7 @@ export function ArticlePage() {
 
       </Container>
       <Box
-            marginLeft="10vw"
+        marginLeft="10vw"
 
       >
         {olderPosts.map((post, index) => (
