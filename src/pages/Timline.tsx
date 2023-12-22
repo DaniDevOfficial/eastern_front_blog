@@ -21,8 +21,11 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { getAllTimelineItems } from "../repo/repo";
 import { TimelineItem } from "../types/Timeline";
 import { Utils } from "../dateUtils";
+import { useNavigate } from "react-router-dom";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 export const Timeline = () => {
+  const navigate = useNavigate();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const isDesktop = useBreakpointValue({ base: false, md: true });
   const [timelineItems, setTimelineItems] = React.useState<TimelineItem[]>([]);
@@ -45,6 +48,15 @@ export const Timeline = () => {
 
   return (
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
+      <HStack
+        color={"white"}
+        align={"center"}
+        cursor={"pointer"}
+        onClick={() => navigate(-1)}
+      >
+        <Icon aria-label="Zurück" as={ArrowBackIcon} />
+        <Text variant={"ghost"}>Zurück</Text>
+      </HStack>
       <Heading fontSize="4xl" mb={18} textAlign="center">
         Timeline
       </Heading>

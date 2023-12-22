@@ -15,12 +15,14 @@ import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CiBookmark } from "react-icons/ci";
 import { Utils } from "../../dateUtils";
+import { useState } from "react";
 
 interface LandingPageProps {
   post: Post;
 }
 
 export function LandingPage({ post: latestPost }: LandingPageProps) {
+  const [bookmarked, setBookmarked] = useState(false);
   return (
     <Box overflowX="hidden">
       <Center>
@@ -71,7 +73,13 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
                   </Text>
                 </Tooltip>
               </HStack>
-              <Icon as={CiBookmark} boxSize={6} />
+              <Icon
+                color={bookmarked ? "accent.base" : "white"}
+                onClick={() => setBookmarked(!bookmarked)}
+                cursor={"pointer"}
+                as={CiBookmark}
+                boxSize={6}
+              />
             </Flex>
           </Box>
           <Box

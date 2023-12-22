@@ -26,6 +26,7 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  Tooltip,
   VStack,
   chakra,
   useDisclosure,
@@ -288,10 +289,11 @@ export function NavBar() {
                       </AvatarMenuIcon>
                     )}
                     <AvatarMenuIcon
+                      isDisabled
                       onClick={() => navigate("/profile")}
                       marginBottom={2}
                     >
-                      Profil
+                      <Tooltip label="Zurzeit nicht verfügbar">Profil</Tooltip>
                     </AvatarMenuIcon>
                     <AvatarMenuIcon onClick={() => auth.signOut()}>
                       Logout

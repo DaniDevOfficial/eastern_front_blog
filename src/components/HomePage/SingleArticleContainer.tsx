@@ -8,12 +8,15 @@ import {
   Flex,
   VStack,
   Spacer,
+  HStack,
+  useToast,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { CiBookmark, CiShare2 } from "react-icons/ci";
 import { Post } from "../../types/Post";
 import { Utils } from "../../dateUtils";
+import { useState } from "react";
 interface SingleArticleContainerProps {
   post: Post;
   type: "double" | "single" | "smallImageLeft" | "smallImageRight";
@@ -24,14 +27,23 @@ export function SingleArticleContainer({
 }: SingleArticleContainerProps) {
   const location = useLocation();
   const currentUrl = window.location.origin + location.pathname;
+  const [bookmarked, setBookmarked] = useState(false);
+  const toast = useToast();
 
   const handleCopyLink = (postId: string) => {
     const linkToCopy = `${currentUrl}#/post/${postId}`;
     navigator.clipboard.writeText(linkToCopy);
-    alert("Link copied to clipboard"); // change to toast
+    toast({
+      title: "Link kopiert",
+      description: "Der Link wurde in die Zwischenablage kopiert.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
   };
-  function handleBookmark(postId: string) {
-    alert("Bookmark clicked: " + postId); // change to real handler
+  function handleBookmark() {
+    setBookmarked(!bookmarked);
   }
   const TextPart = () => {
     return (
@@ -47,9 +59,9 @@ export function SingleArticleContainer({
             >
               <Heading size={"sm"}>{post.title}</Heading>
               <Icon
-                color={"white"}
+                color={bookmarked ? "accent.base" : "white"}
                 _hover={{ cursor: "pointer" }}
-                onClick={() => handleBookmark(post.id)}
+                onClick={() => handleBookmark()}
                 as={CiBookmark}
                 ml={2}
                 boxSize={5}
@@ -84,16 +96,23 @@ export function SingleArticleContainer({
             <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
           </ChakraLink>
         </Box>
-        <Flex alignItems="center" gap={2}>
-          <Text fontSize="sm" color="gray.400">
-            {post.author}
-          </Text>
-          <Text fontSize="sm" color="gray.400">
-            {!!post.published_at && Utils.formatPostDate(post.published_at)}
-          </Text>
-          <Text fontSize="sm" color="gray.400"></Text>
+        <Flex
+          alignItems="center"
+          justify={"space-between"}
+          gap={2}
+          width={"100%"}
+        >
+          <HStack>
+            <Text fontSize="sm" color="gray.400">
+              {post.author}
+            </Text>
+            <Text fontSize="sm" color="gray.400">
+              {!!post.published_at && Utils.formatPostDate(post.published_at)}
+            </Text>
+          </HStack>
           <Box display="flex" alignItems="center" gap={2}>
             <Icon
+              color={"white"}
               as={CiShare2}
               onClick={() => handleCopyLink(post.id)}
               cursor="pointer"
