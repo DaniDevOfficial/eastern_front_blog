@@ -7,6 +7,7 @@ import { AdminPage } from "./AdminPage";
 import { PostUploadPage } from "./PostUploadPage";
 import { TimelineItemUploadPage } from "./TimelineItemUploadPage";
 import { AdminRoute } from "../routes/AdminRoute";
+import PrivacyPolicy from "../components/PrivacyPolicy";
 
 const router = createHashRouter([
   {
@@ -26,6 +27,11 @@ const router = createHashRouter([
       {
         path: "/timeline",
         element: <Timeline />,
+        errorElement: <div>Something went wrong</div>,
+      },
+      {
+        path: "/datenschutz",
+        element: <PrivacyPolicy />,
         errorElement: <div>Something went wrong</div>,
       },
       {
