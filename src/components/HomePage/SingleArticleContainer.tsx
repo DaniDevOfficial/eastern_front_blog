@@ -26,7 +26,7 @@ export function SingleArticleContainer({
   const currentUrl = window.location.origin + location.pathname;
 
   const handleCopyLink = (postId: string) => {
-    const linkToCopy = `${currentUrl}post/${postId}`;
+    const linkToCopy = `${currentUrl}#/post/${postId}`;
     navigator.clipboard.writeText(linkToCopy);
     alert("Link copied to clipboard"); // change to toast
   };

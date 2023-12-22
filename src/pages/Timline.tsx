@@ -89,11 +89,7 @@ interface CardProps {
     isLeft?: boolean;
 }
 
-function findIndexById(array: any[], id: string ) {
-    return array.findIndex(item => item.id === id);
-}
-
-const Card = ({ id, title, description, date, link, readat,  isLeft }: CardProps) => {
+const Card = ({ title, description, date, link, readat,  isLeft }: CardProps) => {
 
 
     let borderWidthValue = isLeft ? '15px 15px 15px 0' : '15px 0 15px 15px';

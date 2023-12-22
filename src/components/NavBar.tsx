@@ -38,10 +38,7 @@ import { googleProvider } from "../configs/firebase";
 import { isAdmin as checkIfAdmin, getAllPosts } from "../repo/repo";
 import { Post } from "../types/Post";
 
-const pages = [
-  { name: "Timeline", path: "/timeline" },
-  { name: "About", path: "/about" },
-];
+const pages = [{ name: "Timeline", path: "/timeline" }];
 
 const song = new Audio(
   atob(

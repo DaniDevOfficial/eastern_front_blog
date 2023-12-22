@@ -111,8 +111,8 @@ export function ArticlePage() {
     // scroll to top
     window.scrollTo(0, 0);
   }, [location]);
-  function handleBookmark(id: string): void {
-    throw new Error("Function not implemented.");
+  function handleBookmark(): void {
+    alert("Bookmark");
   }
 
   const textRef = useRef<HTMLDivElement | null>(null);
@@ -167,7 +167,7 @@ export function ArticlePage() {
           </Heading>
           <Icon
             _hover={{ cursor: "pointer" }}
-            onClick={() => handleBookmark(post.id)}
+            onClick={() => handleBookmark()}
             as={CiBookmark}
             ml={2}
             boxSize={5}
@@ -179,13 +179,17 @@ export function ArticlePage() {
         <Divider />
         <Flex justifyContent="space-between" my={4}>
           <HStack gap={3} align={"top"}>
-            <Text mb={2} color="grey">
-              {post.author}
-            </Text>
-            <Text color="grey">
-              {!!post.published_at &&
-                Utils.formatMessageDate(post.published_at)}
-            </Text>
+            <Tooltip label="Autor">
+              <Text mb={2} color="grey">
+                {post.author}
+              </Text>
+            </Tooltip>
+            <Tooltip label="Veröffentlicht am">
+              <Text color="grey">
+                {!!post.published_at &&
+                  Utils.formatMessageDate(post.published_at)}
+              </Text>
+            </Tooltip>
           </HStack>
           <Text mb={2} color="grey"></Text>
           <HStack gap={"18px"}>

@@ -8,11 +8,12 @@ import {
   Flex,
   Button,
   HStack,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Post } from "../../types/Post";
 import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { CiBookmark, CiClock1 } from "react-icons/ci";
+import { CiBookmark } from "react-icons/ci";
 import { Utils } from "../../dateUtils";
 
 interface LandingPageProps {
@@ -55,15 +56,23 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             color="white"
             display="flex"
             alignItems="center"
+            width={"100%"}
+            paddingX={"2%"}
           >
-            <HStack paddingLeft={{ base: "5%", md: "10%", lg: "10%" }}>
-              <Text fontSize="1rem">{latestPost?.author ?? ""}</Text>
-              <Text fontSize="1rem">
-                {!!latestPost?.published_at &&
-                  Utils.formatMessageDate(latestPost.published_at)}
-              </Text>
+            <Flex width="100%" justify={"space-between"}>
+              <HStack gap={3}>
+                <Tooltip label="Autor">
+                  <Text fontSize="1rem">{latestPost?.author ?? ""}</Text>
+                </Tooltip>
+                <Tooltip label="Veröffentlicht am">
+                  <Text fontSize="1rem">
+                    {!!latestPost?.published_at &&
+                      Utils.formatMessageDate(latestPost.published_at)}
+                  </Text>
+                </Tooltip>
+              </HStack>
               <Icon as={CiBookmark} boxSize={6} />
-            </HStack>
+            </Flex>
           </Box>
           <Box
             position="absolute"

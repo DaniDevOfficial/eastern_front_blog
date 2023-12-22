@@ -1,6 +1,4 @@
-import {
-  Flex,
-} from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import { Post } from "../../types/Post";
 import { SingleArticleContainer } from "./SingleArticleContainer";
@@ -10,13 +8,11 @@ interface MobileHomeMainProps {
 }
 
 export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
-  const multipliedPosts = Array(5).fill(posts).flat();
-
   enum ArticleStyle {
-    Double = 'double',
-    Single = 'single',
-    SmallImageLeft = 'smallImageLeft',
-    SmallImageRight = 'smallImageRight',
+    Double = "double",
+    Single = "single",
+    SmallImageLeft = "smallImageLeft",
+    SmallImageRight = "smallImageRight",
   }
 
   const Article = ({ post, index }: { post: Post; index: number }) => {
@@ -39,23 +35,22 @@ export function DesktopHomeMain({ posts }: MobileHomeMainProps) {
 
     return (
       <SingleArticleContainer
-      
         post={post}
-        type={articleStyleClass as "double" | "single" | "smallImageLeft" | "smallImageRight"}
+        type={
+          articleStyleClass as
+            | "double"
+            | "single"
+            | "smallImageLeft"
+            | "smallImageRight"
+        }
       />
     );
   };
 
   return (
-    <Flex
-      flexWrap="wrap"
-      marginLeft="10vw"
-      mt="10vh"
-      gap="5vw"
-    >
-      {multipliedPosts.map((post, index) => (
-        <Article 
-        key={index} post={post} index={index} />
+    <Flex flexWrap="wrap" marginLeft="10vw" mt="10vh" gap="5vw">
+      {posts.map((post, index) => (
+        <Article key={index} post={post} index={index} />
       ))}
     </Flex>
   );
