@@ -10,7 +10,6 @@ interface MobileHomeMainProps {
 
 export function MobileHomeMain({ posts }: MobileHomeMainProps) {
 
-  const multipliedPosts = Array(5).fill(posts).flat();
 
   enum ArticleStyle {
     Double = 'double',
@@ -46,7 +45,7 @@ export function MobileHomeMain({ posts }: MobileHomeMainProps) {
       mt="10vh"
       gap="5vw"
     >
-      {multipliedPosts.map((post, index) => (
+      {posts.map((post, index) => (
         <Article
           key={index} post={post} index={index} />
       ))}
