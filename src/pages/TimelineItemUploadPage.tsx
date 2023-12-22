@@ -45,8 +45,8 @@ export function TimelineItemUploadPage() {
       });
       setIsLoading(false);
       toast({
-        title: "Post erfolgreich hochgeladen",
-        description: "Der Post wurde erfolgreich hochgeladen",
+        title: "Timeline Item erfolgreich hochgeladen",
+        description: "Das Timeline Item wurde erfolgreich hochgeladen",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -60,7 +60,7 @@ export function TimelineItemUploadPage() {
     } catch (error: any) {
       setIsLoading(false);
       toast({
-        title: "Fehler beim Hochladen des Posts",
+        title: "Fehler beim Hochladen des Timeline Items",
         description: error.message,
         status: "error",
         duration: 5000,

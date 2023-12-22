@@ -18,12 +18,12 @@ import {
   Image,
   Link,
   Text,
+  Tooltip,
   chakra,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import { CiBookmark, CiClock1, CiVolume, CiVolumeHigh } from "react-icons/ci";
+import { CiBookmark, CiClock1, CiVolumeHigh } from "react-icons/ci";
 import { useEffect, useRef, useState } from "react";
 import { SingleArticleContainer } from "../components/HomePage/SingleArticleContainer";
 import { Utils } from "../dateUtils";
@@ -116,17 +116,38 @@ export function ArticlePage() {
   }
 
   const textRef = useRef<HTMLDivElement | null>(null);
-  function TextToSpeach(): void {
-    const utterance = new SpeechSynthesisUtterance(
-      textRef.current?.innerText ?? ""
-    );
+  const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(
+    new SpeechSynthesisUtterance(textRef.current?.innerText ?? "")
+  );
+  const [speaking, setSpeaking] = useState(false);
 
-    utterance.lang = "de-DE";
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    utterance.volume = 1;
+  useEffect(() => {
+    if (!article || !textRef.current) return;
+    speechSynthesisRef.current!.text = textRef.current.innerText ?? "";
 
-    speechSynthesis.speak(utterance);
+    speechSynthesisRef.current!.lang = "de-DE";
+    speechSynthesisRef.current!.rate = 1;
+    speechSynthesisRef.current!.pitch = 1;
+    speechSynthesisRef.current!.volume = 1;
+  }, [article]);
+
+  function startSpeaking(): void {
+    setSpeaking(true);
+    speechSynthesis.speak(speechSynthesisRef.current!);
+    speechSynthesisRef.current!.onend = () => {
+      setSpeaking(false);
+    };
+  }
+
+  useEffect(() => {
+    () => {
+      speechSynthesis.cancel();
+    };
+  });
+
+  function stopSpeaking(): void {
+    speechSynthesis.cancel();
+    setSpeaking(false);
   }
   return (
     <>
@@ -157,7 +178,7 @@ export function ArticlePage() {
         </Text>
         <Divider />
         <Flex justifyContent="space-between" my={4}>
-          <HStack gap={3}>
+          <HStack gap={3} align={"top"}>
             <Text mb={2} color="grey">
               {post.author}
             </Text>
@@ -168,24 +189,35 @@ export function ArticlePage() {
           </HStack>
           <Text mb={2} color="grey"></Text>
           <HStack gap={"18px"}>
-            <Flex color={"gray"} align={"center"}>
-              <Text color="grey" _hover={{ cursor: "pointer" }} marginRight={2}>
-                {readingTime} min
-              </Text>
-              <Icon _hover={{ cursor: "pointer" }} as={CiClock1} boxSize={5} />
-            </Flex>
-
-            <Flex color={"gray"} align={"center"}>
-              <Text
-                color={"grey"}
-                onClick={() => TextToSpeach()}
-                _hover={{ cursor: "pointer" }}
-                marginRight={2}
-              >
-                Vorlesen
-              </Text>
-              <Icon as={CiVolumeHigh} boxSize={5} />
-            </Flex>
+            <Tooltip label="Lesezeit">
+              <Flex color={"gray"} align={"center"}>
+                <Text
+                  color="grey"
+                  _hover={{ cursor: "pointer" }}
+                  marginRight={2}
+                >
+                  {readingTime} min
+                </Text>
+                <Icon
+                  _hover={{ cursor: "pointer" }}
+                  as={CiClock1}
+                  boxSize={5}
+                />
+              </Flex>
+            </Tooltip>
+            <Tooltip label="Vorlesen">
+              <Flex color={"gray"} align={"center"}>
+                <Text
+                  color={"grey"}
+                  onClick={speaking ? stopSpeaking : startSpeaking}
+                  _hover={{ cursor: "pointer" }}
+                  marginRight={2}
+                >
+                  {speaking ? "Pausieren" : "Vorlesen"}
+                </Text>
+                <Icon as={CiVolumeHigh} boxSize={5} />
+              </Flex>
+            </Tooltip>
           </HStack>
         </Flex>
         <Image
@@ -201,9 +233,11 @@ export function ArticlePage() {
           <Text mb={2} color="grey" fontStyle={"italic"}>
             {post.image?.description}
           </Text>
-          <Link href={post.image?.source} target="_blank" mb={2} color="grey">
-            {post.image?.source}
-          </Link>
+          <Tooltip label={new URL(post.image!.source).host}>
+            <Link href={post.image?.source} target="_blank" mb={2} color="grey">
+              Quelle
+            </Link>
+          </Tooltip>
         </Flex>
         <Divider />
         <chakra.div mt={8} mb={4} color="#FFFFFF">

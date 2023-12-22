@@ -17,7 +17,6 @@ export function HomeMain({ posts }: HomeMainProps) {
       ) : (
         <DesktopHomeMain posts={posts} />
       )}
-      
     </>
   );
 }

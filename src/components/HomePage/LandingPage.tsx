@@ -6,6 +6,8 @@ import {
   Icon,
   Center,
   Flex,
+  Button,
+  HStack,
 } from "@chakra-ui/react";
 import { Post } from "../../types/Post";
 import { AiOutlineArrowDown, AiOutlineArrowRight } from "react-icons/ai";
@@ -50,33 +52,25 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             left="0"
             textAlign="left"
             paddingTop="2%"
-            paddingLeft="5%"
             color="white"
             display="flex"
             alignItems="center"
           >
-            <Text fontSize="1rem" padding="0 10px">
-              {latestPost?.author ?? ""}
-            </Text>
-            <Text fontSize="1rem" padding="0 10px">
-              {!!latestPost?.published_at &&
-                Utils.formatMessageDate(latestPost.published_at)}
-            </Text>
-            <Box display="flex" alignItems="center" padding="0 10px">
-              <Icon as={CiClock1} boxSize={5} />
-              <Text fontSize="1rem" padding="0 5px">
-                5 min
+            <HStack paddingLeft={{ base: "5%", md: "10%", lg: "10%" }}>
+              <Text fontSize="1rem">{latestPost?.author ?? ""}</Text>
+              <Text fontSize="1rem">
+                {!!latestPost?.published_at &&
+                  Utils.formatMessageDate(latestPost.published_at)}
               </Text>
-            </Box>
-            <Icon as={CiBookmark} boxSize={6} />
+              <Icon as={CiBookmark} boxSize={6} />
+            </HStack>
           </Box>
           <Box
             position="absolute"
             bottom="0"
-            right="0"
+            left="0"
             textAlign={{ base: "center", md: "left" }}
-            paddingRight={{ base: "10vw", md: "70%" }}
-            paddingLeft={{ base: "10vw", md: "3vw" }}
+            paddingLeft={{ base: "5%", md: "3%" }}
             color="white"
             paddingBottom={{ base: "5%", md: "5%" }}
           >
@@ -88,23 +82,20 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
             </Heading>
 
             {latestPost && (
-              <Box
-                _hover={{ cursor: "pointer" }}
-                p={2}
-                display="inline-flex"
-                color="#FEC709"
-                border={{ base: "1px solid #FEC709" }}
-                borderRadius="10px"
-              >
-                <ChakraLink
-                  as={ReactRouterLink}
-                  to={`/post/${latestPost.id}`}
-                  color="#FEC709"
-                >
-                  Mehr lesen
-                  <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
-                </ChakraLink>
-              </Box>
+              <>
+                <Button variant="outline" marginLeft={{ base: "-5", md: 0 }}>
+                  <HStack align={"center"}>
+                    <ChakraLink
+                      as={ReactRouterLink}
+                      to={`/post/${latestPost.id}`}
+                      color="#FEC709"
+                    >
+                      Mehr lesen
+                    </ChakraLink>
+                    <Icon as={AiOutlineArrowRight} boxSize={4} ml={1} />
+                  </HStack>
+                </Button>
+              </>
             )}
           </Box>
         </Box>
@@ -165,7 +156,7 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
           display="block"
           content=""
         />
-        Ältere Artikel
+        <Text>Ältere Artikel</Text>
       </Box>
     </Box>
   );

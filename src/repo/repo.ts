@@ -246,7 +246,7 @@ export async function createPost(input: CreatePostInput): Promise<string> {
   let post: Partial<FirestorePost> = {
     title: input.title,
     subtitle: input.subTitle,
-    published_at: new Date().toLocaleDateString(),
+    published_at: new Date().toDateString(),
     author: input.author,
   };
   if (input.image) {

@@ -151,6 +151,7 @@ export function NavBar() {
                 <Search2Icon color={"bg-highlight"} />
               </InputLeftElement>
               <Input
+                color={"black"}
                 fontWeight={"medium"}
                 borderColor="transparent"
                 focusBorderColor="transparent"

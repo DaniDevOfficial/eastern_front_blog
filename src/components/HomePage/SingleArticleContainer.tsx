@@ -6,6 +6,8 @@ import {
   Link as ChakraLink,
   Icon,
   Flex,
+  VStack,
+  Spacer,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -33,23 +35,32 @@ export function SingleArticleContainer({
   }
   const TextPart = () => {
     return (
-      <Box p={4}>
-        <Flex>
-          <Heading as="h2" size="md" mb={2}>
-            {post.title}
-          </Heading>
-          <Icon
-            _hover={{ cursor: "pointer" }}
-            onClick={() => handleBookmark(post.id)}
-            as={CiBookmark}
-            ml={2}
-            boxSize={5}
-          />
+      <>
+        <Flex align={"start"}>
+          <VStack paddingX={4} width={"100%"}>
+            <Flex
+              align={"top"}
+              direction={"row"}
+              justify={"space-between"}
+              width={"100%"}
+              height={"100%"}
+            >
+              <Heading size={"sm"}>{post.title}</Heading>
+              <Icon
+                color={"white"}
+                _hover={{ cursor: "pointer" }}
+                onClick={() => handleBookmark(post.id)}
+                as={CiBookmark}
+                ml={2}
+                boxSize={5}
+              />
+            </Flex>
+            <Text textAlign={"start"} width={"100%"}>
+              {post.subtitle}
+            </Text>
+          </VStack>
         </Flex>
-        <Text fontSize="sm" color="#FFFFFF" mb={2}>
-          {post.subtitle}
-        </Text>
-      </Box>
+      </>
     );
   };
   const BottomPart = () => {
@@ -123,10 +134,11 @@ export function SingleArticleContainer({
             />
           </Box>
         </Box>
-        <Box>
+        <Flex height={"100%"} direction={"column"}>
           <TextPart />
+          <Spacer />
           <BottomPart />
-        </Box>
+        </Flex>
       </Box>
     );
   } else if (type === "single") {
@@ -157,15 +169,14 @@ export function SingleArticleContainer({
   } else if (type === "smallImageLeft") {
     return (
       <Box width="80vw" backgroundColor="#1C1C20" borderRadius="20px" mb={10}>
-        <Flex alignItems="center">
+        <Flex alignItems="center" height={"100%"}>
           <Box
+            width={"40%"}
             ml={4}
-            minWidth={"400px"}
-            minHeight={"40vh"}
-            width="37vw"
             display={"flex"}
             flexDirection="column"
             justifyContent={"center"}
+            height={"100%"}
           >
             <Image
               borderRadius="20px"
@@ -177,29 +188,40 @@ export function SingleArticleContainer({
               p={2}
             />
           </Box>
-          <Box>
+          <Flex
+            height={"100%"}
+            width={"100%"}
+            align={"stretch"}
+            direction={"column"}
+          >
             <TextPart />
+            <Spacer />
             <BottomPart />
-          </Box>
+          </Flex>
         </Flex>
       </Box>
     );
   } else if (type === "smallImageRight") {
     return (
       <Box width="80vw" backgroundColor="#1C1C20" borderRadius="20px" mb={10}>
-        <Flex alignItems="center">
-          <Box>
+        <Flex alignItems="center" height={"100%"}>
+          <Flex
+            width={"100%"}
+            height={"100%"}
+            align={"stretch"}
+            direction={"column"}
+          >
             <TextPart />
+            <Spacer />
             <BottomPart />
-          </Box>
+          </Flex>
           <Box
+            width={"40%"}
             ml={4}
-            width="37vw"
-            minWidth={"400px"}
-            minHeight={"40vh"}
             display={"flex"}
             flexDirection="column"
             justifyContent={"center"}
+            height={"100%"}
           >
             <Image
               borderRadius="20px"
