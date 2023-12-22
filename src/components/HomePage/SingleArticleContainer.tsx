@@ -89,7 +89,7 @@ export function SingleArticleContainer({
             {post.author}
           </Text>
           <Text fontSize="sm" color="gray.400">
-            {!!post.published_at && Utils.formatMessageDate(post.published_at)}
+            {!!post.published_at && Utils.formatPostDate(post.published_at)}
           </Text>
           <Text fontSize="sm" color="gray.400"></Text>
           <Box display="flex" alignItems="center" gap={2}>

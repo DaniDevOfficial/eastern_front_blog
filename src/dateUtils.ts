@@ -1,39 +1,48 @@
-function formatMessageDate(sentAt: Date): string {
+function formatPostDate(date: Date): string {
   const today = new Date();
-  if (sentAt.getFullYear() != today.getFullYear()) {
-    return sentAt.toLocaleDateString(undefined, {
+  if (date.getFullYear() != today.getFullYear()) {
+    return date.toLocaleDateString(undefined, {
       day: "numeric",
       month: "long",
       year: "numeric",
     });
   }
 
-  if (sentAt.getDate() === today.getDate()) {
+  if (date.getDate() === today.getDate()) {
     return "Heute";
   }
 
-  if (sentAt.getDate() === today.getDate() - 1) {
+  if (date.getDate() === today.getDate() - 1) {
     return "Gestern";
   }
 
-  if (wasInTheLastWeek(sentAt)) {
-    return sentAt.toLocaleDateString(undefined, { weekday: "long" });
+  if (wasInTheLastWeek(date)) {
+    return date.toLocaleDateString(undefined, { weekday: "long" });
   }
 
-  return sentAt.toLocaleDateString(undefined, {
+  return date.toLocaleDateString(undefined, {
     day: "numeric",
     month: "long",
   });
 }
 
-function wasInTheLastWeek(sentAt: Date): boolean {
+function wasInTheLastWeek(date: Date): boolean {
   const today = new Date();
   const lastWeek = new Date();
   lastWeek.setDate(today.getDate() - 7);
 
-  return sentAt.getTime() > lastWeek.getTime();
+  return date.getTime() > lastWeek.getTime();
+}
+
+function formatTimelineDate(date: Date) {
+  return date.toLocaleDateString("De-de", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 export const Utils = {
-  formatMessageDate,
+  formatPostDate,
+  formatTimelineDate,
 };

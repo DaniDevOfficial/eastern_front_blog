@@ -186,8 +186,7 @@ export function ArticlePage() {
             </Tooltip>
             <Tooltip label="Veröffentlicht am">
               <Text color="grey">
-                {!!post.published_at &&
-                  Utils.formatMessageDate(post.published_at)}
+                {!!post.published_at && Utils.formatPostDate(post.published_at)}
               </Text>
             </Tooltip>
           </HStack>

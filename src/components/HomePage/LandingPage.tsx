@@ -67,7 +67,7 @@ export function LandingPage({ post: latestPost }: LandingPageProps) {
                 <Tooltip label="Veröffentlicht am">
                   <Text fontSize="1rem">
                     {!!latestPost?.published_at &&
-                      Utils.formatMessageDate(latestPost.published_at)}
+                      Utils.formatPostDate(latestPost.published_at)}
                   </Text>
                 </Tooltip>
               </HStack>

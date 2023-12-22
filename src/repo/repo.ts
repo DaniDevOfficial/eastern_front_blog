@@ -67,7 +67,7 @@ export async function getAllTimelineItems(): Promise<TimelineItem[]> {
 
         return {
           id: doc.id,
-          date: data.date,
+          date: new Date(data.date),
           title: data.title,
           description: data.description || "",
           link: data.link,
