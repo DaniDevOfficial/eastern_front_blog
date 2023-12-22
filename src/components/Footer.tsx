@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const pages = [
   { name: "Timeline", path: "/timeline" },
-  { name: "Impressum", path: "/impressum" },
   { name: "Datenschutz", path: "/datenschutz" },
 ];
 
